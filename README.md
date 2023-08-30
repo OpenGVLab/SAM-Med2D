@@ -10,7 +10,7 @@
 ## 🌤️ Highlights
 - 🏆 Collected and curated the largest medical image segmentation dataset (4.6M images and 19.7M masks) to date for training models.
 - 🏆 The most comprehensive fine-tuning based on Segment Anything Model (SAM).
-- 🏆 comprehensive evaluation of SAM-Med2D on large-scale datasets.
+- 🏆 Comprehensive evaluation of SAM-Med2D on large-scale datasets.
 
 ## Dataset 👈
 SAM-Med2D is trained and tested on a dataset that includes **4.6M images** and **19.7M masks**. This dataset covers 10 medical data modalities, 4 anatomical structures + lesions, and 31 major human organs. To our knowledge, this is currently the largest and most diverse medical image segmentation dataset in terms of quantity and coverage of categories.
