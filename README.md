@@ -1,7 +1,7 @@
 # SAM-Med2D \[[Paper]()]
 [![Open in OpenXLab](https://cdn-static.openxlab.org.cn/app-center/openxlab_app.svg)](https://openxlab.org.cn/apps/detail/litianbin/SAM-Med2D)
 </a> 
-<a src="https://img.shields.io/badge/cs.CV-2305.06355-b31b1b?logo=arxiv&logoColor=red" href=" "> <img src="https://img.shields.io/badge/cs.CV-2305.06355-b31b1b?logo=arxiv&logoColor=red">
+<a src="https://img.shields.io/badge/cs.CV-2305.06356-b31b1b?logo=arxiv&logoColor=red" href=" "> <img src="https://img.shields.io/badge/cs.CV-2305.06356-b31b1b?logo=arxiv&logoColor=red">
 <a src="https://img.shields.io/badge/WeChat-Group-green?logo=wechat" href="https://github.com/uni-medical/SAM-Med2D/blob/main/assets/SAM-Med2D_wechat_group.jpeg"> <img src="https://img.shields.io/badge/WeChat-Group-green?logo=wechat">
 </a>
 [![GitHub Stars](https://img.shields.io/github/stars/uni-medical/SAM-Med2D.svg?style=social&label=Star&maxAge=60)](https://github.com/uni-medical/SAM-Med2D)🔥🔥🔥
