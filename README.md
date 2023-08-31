@@ -38,6 +38,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
       <th>3 pts (%)</th>
       <th>5 pts (%)</th>
       <th>FPS</th>
+      <th>Checkpoint</th>
     </tr>
   </thead>
   <tbody>
@@ -49,6 +50,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
       <td align="center">28.28</td>
       <td align="center">37.47</td>
       <td align="center">51</td>
+      <td align="center"><a href="https://drive.google.com/file/d/1_U26MIJhWnWVwmI5JkGg2cd2J6MvkqU-/view?usp=drive_link">Offical</a></td>
     </tr>
     <tr>
       <td align="center">SAM</td>
@@ -58,6 +60,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
       <td align="center">42.00</td>
       <td align="center">47.57</td>
       <td align="center">8</td>
+      <td align="center"><a href="https://drive.google.com/file/d/1_U26MIJhWnWVwmI5JkGg2cd2J6MvkqU-/view?usp=drive_link">Offical</a></td>
     </tr>
     <tr>
       <td align="center">FT-SAM</td>
@@ -67,6 +70,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
       <td align="center">70.95</td>
       <td align="center">75.51</td>
       <td align="center">51</td>
+      <td align="center"><a href="https://drive.google.com/file/d/1J4qQt9MZZYdv1eoxMTJ4FL8Fz65iUFM8/view?usp=drive_link">FT-SAM</a></td>
     </tr>
     <tr>
       <td align="center">SAM-Med2D</td>
@@ -76,6 +80,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
       <td align="center">76.35</td>
       <td align="center">78.68</td>
       <td align="center">35</td>
+      <td align="center"><a href="https://drive.google.com/file/d/1ARiB5RkSsWmAB_8mqWnwDF8ZKTtFwsjl/view?usp=drive_link">SAM-Med2D</a></td>
     </tr>
   </tbody>
 </table>
@@ -192,21 +197,6 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
   </tbody>
 </table>
 
-
-<table><tbody>
-  <caption>Table 3. Get Checkpoint.</caption>
-<!-- START TABLE -->
-<!-- TABLE HEADER -->
-<th valign="bottom">Model</th>
-<th valign="bottom">sam_vit_b</th>
-<th valign="bottom">ft-sam_vit_b</th>
-<th valign="bottom">sam-med2d_vit_b</th>
-<!-- TABLE BODY -->
-<tr><td align="left">pre-trained checkpoint</td>
-<td align="center"><a href="https://drive.google.com/file/d/1_U26MIJhWnWVwmI5JkGg2cd2J6MvkqU-/view?usp=drive_link">download</a></td>
-<td align="center"><a href="https://drive.google.com/file/d/1J4qQt9MZZYdv1eoxMTJ4FL8Fz65iUFM8/view?usp=drive_link">download</a></td>
-<td align="center"><a href="https://drive.google.com/file/d/1ARiB5RkSsWmAB_8mqWnwDF8ZKTtFwsjl/view?usp=drive_link">download</a></td>
-</tbody></table>
 
 ## Visualization 👈
 <p align="center"><img width="800" alt="image" src="https://github.com/uni-medical/SAM-Med2D/blob/main/assets/visualization.png"></p> 
