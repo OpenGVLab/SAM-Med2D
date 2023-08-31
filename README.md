@@ -23,6 +23,20 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
 ## Results 👈
 <p align="center"><img width="800" alt="image" src="https://github.com/uni-medical/SAM-Med2D/blob/main/assets/result.png"></p> 
 
+<table align="center"><tbody>
+<!-- START TABLE -->
+<!-- TABLE HEADER -->
+<th valign="bottom"></th>
+<th valign="bottom">sam_vit_b</th>
+<th valign="bottom">ft-sam_vit_b</th>
+<th valign="bottom">sam-med2d_vit_b</th>
+<!-- TABLE BODY -->
+<tr><td align="left">pre-trained checkpoint</td>
+<td align="center"><a href="https://drive.google.com/file/d/1_U26MIJhWnWVwmI5JkGg2cd2J6MvkqU-/view?usp=drive_link">download</a></td>
+<td align="center"><a href="https://drive.google.com/file/d/1J4qQt9MZZYdv1eoxMTJ4FL8Fz65iUFM8/view?usp=drive_link">download</a></td>
+<td align="center"><a href="https://drive.google.com/file/d/1ARiB5RkSsWmAB_8mqWnwDF8ZKTtFwsjl/view?usp=drive_link">download</a></td>
+</tbody></table>
+
 ## 🚀 Online Demo
 
 **SAM-Med2D** online Demo can be found on [OpenXLab](https://openxlab.org.cn/apps/detail/litianbin/SAM-Med2D). Let's try it!
