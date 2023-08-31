@@ -12,6 +12,11 @@
 - 🏆 The most comprehensive fine-tuning based on Segment Anything Model (SAM).
 - 🏆 Comprehensive evaluation of SAM-Med2D on large-scale datasets.
 
+## 🔥 Updates
+- (2023.08.26) Online Demo release
+- (2023.08.31) Paper release
+- (2023.08.31) Pre-trained model release
+
 ## Dataset 👈
 SAM-Med2D is trained and tested on a dataset that includes **4.6M images** and **19.7M masks**. This dataset covers 10 medical data modalities, 4 anatomical structures + lesions, and 31 major human organs. To our knowledge, this is currently the largest and most diverse medical image segmentation dataset in terms of quantity and coverage of categories.
 <p align="center"><img width="800" alt="image" src="https://github.com/uni-medical/SAM-Med2D/blob/main/assets/dataset.png"></p> 
@@ -21,12 +26,178 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
 <p align="center"><img width="800" alt="image" src="https://github.com/uni-medical/SAM-Med2D/blob/main/assets/framwork.png"></p> 
 
 ## Results 👈
-<p align="center"><img width="800" alt="image" src="https://github.com/uni-medical/SAM-Med2D/blob/main/assets/result.png"></p> 
 
-<table align="center"><tbody>
+<table>
+  <caption align="center">Table 1. Quantitative comparison of different methods on the test set.</caption>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Resolution</th>
+      <th>Bbox (%)</th>
+      <th>1 pt (%)</th>
+      <th>3 pts (%)</th>
+      <th>5 pts (%)</th>
+      <th>FPS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">SAM</td>
+      <td align="center">$256\times256$</td>
+      <td align="center">61.63</td>
+      <td align="center">18.94</td>
+      <td align="center">28.28</td>
+      <td align="center">37.47</td>
+      <td align="center">51</td>
+    </tr>
+    <tr>
+      <td align="center">SAM</td>
+      <td align="center">$1024\times1024$</td>
+      <td align="center">74.49</td>
+      <td align="center">36.88</td>
+      <td align="center">42.00</td>
+      <td align="center">47.57</td>
+      <td align="center">8</td>
+    </tr>
+    <tr>
+      <td align="center">FT-SAM</td>
+      <td align="center">$256\times256$</td>
+      <td align="center">73.56</td>
+      <td align="center">60.11</td>
+      <td align="center">70.95</td>
+      <td align="center">75.51</td>
+      <td align="center">51</td>
+    </tr>
+    <tr>
+      <td align="center">SAM-Med2D</td>
+      <td align="center">$256\times256$</td>
+      <td align="center">79.30</td>
+      <td align="center">70.01</td>
+      <td align="center">76.35</td>
+      <td align="center">78.68</td>
+      <td align="center">35</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table>
+    <caption align="center">Table 2. Generalization validation on 9 MICCAI2023 datasets.</caption>
+  <thead>
+    <tr>
+      <th rowspan="2">Datasets</th>
+      <th colspan="3">Bbox prompt (%)</th>
+      <th colspan="3">1 point prompt (%)</th>
+    </tr>
+    <tr>
+      <th>SAM</th>
+      <th>SAM-Med2D</th>
+      <th>SAM-Med2D*</th>
+      <th>SAM</th>
+      <th>SAM-Med2D</th>
+      <th>SAM-Med2D*</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">CrossMoDA23</td>
+      <td align="center">78.98</td>
+      <td align="center">70.51</td>
+      <td align="center">84.62</td>
+      <td align="center">18.49</td>
+      <td align="center">46.08</td>
+      <td align="center">73.98</td>
+    </tr>
+    <tr>
+      <td align="center">KiTS23</td>
+      <td align="center">84.80</td>
+      <td align="center">76.32</td>
+      <td align="center">87.93</td>
+      <td align="center">38.93</td>
+      <td align="center">48.81</td>
+      <td align="center">79.87</td>
+    </tr>
+    <tr>
+      <td align="center">FLARE23</td>
+      <td align="center">86.11</td>
+      <td align="center">83.51</td>
+      <td align="center">90.95</td>
+      <td align="center">51.05</td>
+      <td align="center">62.86</td>
+      <td align="center">85.10</td>
+    </tr>
+    <tr>
+      <td align="center">ATLAS2023</td>
+      <td align="center">82.98</td>
+      <td align="center">73.70</td>
+      <td align="center">86.56</td>
+      <td align="center">46.89</td>
+      <td align="center">34.72</td>
+      <td align="center">70.42</td>
+    </tr>
+    <tr>
+      <td align="center">SEG</td>
+      <td align="center">75.98</td>
+      <td align="center">68.02</td>
+      <td align="center">84.31</td>
+      <td align="center">11.75</td>
+      <td align="center">48.05</td>
+      <td align="center">69.85</td>
+    </tr>
+    <tr>
+      <td align="center">LNQ2023</td>
+      <td align="center">72.31</td>
+      <td align="center">63.84</td>
+      <td align="center">81.33</td>
+      <td align="center">3.81</td>
+      <td align="center">44.81</td>
+      <td align="center">59.84</td>
+    </tr>
+    <tr>
+      <td align="center">CAS2023</td>
+      <td align="center">52.34</td>
+      <td align="center">46.11</td>
+      <td align="center">60.38</td>
+      <td align="center">0.45</td>
+      <td align="center">28.79</td>
+      <td align="center">15.19</td>
+    </tr>
+    <tr>
+      <td align="center">TDSC-ABUS2023</td>
+      <td align="center">71.66</td>
+      <td align="center">64.65</td>
+      <td align="center">76.65</td>
+      <td align="center">12.11</td>
+      <td align="center">35.99</td>
+      <td align="center">61.84</td>
+    </tr>
+    <tr>
+      <td align="center">ToothFairy2023</td>
+      <td align="center">65.86</td>
+      <td align="center">57.45</td>
+      <td align="center">75.29</td>
+      <td align="center">1.01</td>
+      <td align="center">32.12</td>
+      <td align="center">47.32</td>
+    </tr>
+    <tr>
+      <td align="center">Weighted average</td>
+      <td align="center">85.35</td>
+      <td align="center">81.93</td>
+      <td align="center">90.12</td>
+      <td align="center">48.08</td>
+      <td align="center">60.31</td>
+      <td align="center">83.41</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table><tbody>
+  <caption>Table 3. Get Checkpoint.</caption>
 <!-- START TABLE -->
 <!-- TABLE HEADER -->
-<th valign="bottom"></th>
+<th valign="bottom">Model</th>
 <th valign="bottom">sam_vit_b</th>
 <th valign="bottom">ft-sam_vit_b</th>
 <th valign="bottom">sam-med2d_vit_b</th>
@@ -37,19 +208,21 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
 <td align="center"><a href="https://drive.google.com/file/d/1ARiB5RkSsWmAB_8mqWnwDF8ZKTtFwsjl/view?usp=drive_link">download</a></td>
 </tbody></table>
 
-## 🚀 Online Demo
+## Visualization 👈
+<p align="center"><img width="800" alt="image" src="https://github.com/uni-medical/SAM-Med2D/blob/main/assets/visualization.png"></p> 
 
-**SAM-Med2D** online Demo can be found on [OpenXLab](https://openxlab.org.cn/apps/detail/litianbin/SAM-Med2D). Let's try it!
 
-
-## 🔥 Updates
-- (2023.08.26) Online Demo release
-- (2023.08.31) Paper release
+## 🚀 Try SAM-Med2D
+- 🏆 **Gradio Online:** Online Demo can be found on [OpenXLab](https://openxlab.org.cn/apps/detail/litianbin/SAM-Med2D).
+- 🏆 **Notebook Demo:** You can use [predictor_example.ipynb](https://github.com/uni-medical/SAM-Med2D/blob/main/predictor_example.ipynb) to run it locally to view the prediction results generated by different prompts.
+- 🏆 **Gradio Local:** You can deploy [app.ipynb](https://github.com/uni-medical/SAM-Med2D/blob/main/app.ipynb) locally and upload test cases.
+  
 
 ## 🗓️ Ongoing
-- [x] Online Demo release
-- [x] Paper release
 - [ ] Code release
+- [x] Pre-trained model release
+- [x] Paper release
+- [x] Online Demo release
 
 ## 🎫 License
 This project is released under the [Apache 2.0 license](LICENSE). 
