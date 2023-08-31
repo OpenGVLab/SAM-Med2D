@@ -13,9 +13,9 @@
 - 🏆 Comprehensive evaluation of SAM-Med2D on large-scale datasets.
 
 ## 🔥 Updates
-- (2023.08.26) Online Demo release
-- (2023.08.31) Paper release
 - (2023.08.31) Pre-trained model release
+- (2023.08.31) Paper release
+- (2023.08.26) Online Demo release
 
 ## Dataset 👈
 SAM-Med2D is trained and tested on a dataset that includes **4.6M images** and **19.7M masks**. This dataset covers 10 medical data modalities, 4 anatomical structures + lesions, and 31 major human organs. To our knowledge, this is currently the largest and most diverse medical image segmentation dataset in terms of quantity and coverage of categories.
@@ -28,7 +28,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
 ## Results 👈
 
 <table>
-  <caption align="center">Table 1. Quantitative comparison of different methods on the test set.</caption>
+  <caption align="center">Quantitative comparison of different methods on the test set: </caption>
   <thead>
     <tr>
       <th>Model</th>
@@ -87,7 +87,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
 
 
 <table>
-    <caption align="center">Table 2. Generalization validation on 9 MICCAI2023 datasets.</caption>
+    <caption align="center">Generalization validation on 9 datasets of MICCAI2023 Challenge: </caption>
   <thead>
     <tr>
       <th rowspan="2">Datasets</th>
@@ -141,7 +141,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
       <td align="center">70.42</td>
     </tr>
     <tr>
-      <td align="center">SEG</td>
+      <td align="center">SEG2023</td>
       <td align="center">75.98</td>
       <td align="center">68.02</td>
       <td align="center">84.31</td>
@@ -228,3 +228,15 @@ Thanks to the open-source of the following projects:
 
 ## 👋 Hiring
 We are hiring researchers, engineers and interns in **General Vision Group, Shanghai AI Lab**. If you are interested in Medical Foundation Models and General Medical AI, including designing benchmark datasets , general models, evaluation systems, and efficient tools, please contact [Junjun He](https://scholar.google.com/citations?hl=zh-CN&user=Z4LgebkAAAAJ)(`hejunjun@pjlab.org.cn`), [Jin Ye](https://scholar.google.com/citations?user=UFBrJOAAAAAJ&hl=zh-CN)(`yejin@pjlab.org.cn`), and Tianbin Li (`litianbin@pjlab.org.cn`).
+
+## Reference
+```
+@misc{cheng2023sammed2d,
+      title={SAM-Med2D}, 
+      author={Junlong Cheng and Jin Ye and Zhongying Deng and Jianpin Chen and Tianbin Li et al.},
+      year={2023},
+      eprint={2308.16184},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+```
