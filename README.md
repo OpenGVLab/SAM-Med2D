@@ -105,7 +105,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
   </thead>
   <tbody>
     <tr>
-      <td align="center">CrossMoDA23</td>
+      <td align="center"><a href="https://www.synapse.org/#!Synapse:syn51236108/wiki/621615">CrossMoDA23</a></td>
       <td align="center">78.98</td>
       <td align="center">70.51</td>
       <td align="center">84.62</td>
@@ -114,7 +114,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
       <td align="center">73.98</td>
     </tr>
     <tr>
-      <td align="center">KiTS23</td>
+      <td align="center"><a href="https://kits-challenge.org/kits23/">KiTS23</a></td>
       <td align="center">84.80</td>
       <td align="center">76.32</td>
       <td align="center">87.93</td>
@@ -123,7 +123,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
       <td align="center">79.87</td>
     </tr>
     <tr>
-      <td align="center">FLARE23</td>
+      <td align="center"><a href="https://codalab.lisn.upsaclay.fr/competitions/12239#learn_the_details">FLARE23</a></td>
       <td align="center">86.11</td>
       <td align="center">83.51</td>
       <td align="center">90.95</td>
@@ -132,7 +132,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
       <td align="center">85.10</td>
     </tr>
     <tr>
-      <td align="center">ATLAS2023</td>
+      <td align="center"><a href="https://atlas-challenge.u-bourgogne.fr/">ATLAS2023</a></td>
       <td align="center">82.98</td>
       <td align="center">73.70</td>
       <td align="center">86.56</td>
@@ -141,7 +141,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
       <td align="center">70.42</td>
     </tr>
     <tr>
-      <td align="center">SEG2023</td>
+      <td align="center"><a href="https://multicenteraorta.grand-challenge.org/">SEG2023</a></td>
       <td align="center">75.98</td>
       <td align="center">68.02</td>
       <td align="center">84.31</td>
@@ -150,7 +150,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
       <td align="center">69.85</td>
     </tr>
     <tr>
-      <td align="center">LNQ2023</td>
+      <td align="center"><a href="https://lnq2023.grand-challenge.org/lnq2023/">LNQ2023</a></td>
       <td align="center">72.31</td>
       <td align="center">63.84</td>
       <td align="center">81.33</td>
@@ -159,7 +159,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
       <td align="center">59.84</td>
     </tr>
     <tr>
-      <td align="center">CAS2023</td>
+      <td align="center"><a href="https://codalab.lisn.upsaclay.fr/competitions/9804">CAS2023</a></td>
       <td align="center">52.34</td>
       <td align="center">46.11</td>
       <td align="center">60.38</td>
@@ -168,7 +168,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
       <td align="center">15.19</td>
     </tr>
     <tr>
-      <td align="center">TDSC-ABUS2023</td>
+      <td align="center"><a href="https://tdsc-abus2023.grand-challenge.org/Dataset/">TDSC-ABUS2023</a></td>
       <td align="center">71.66</td>
       <td align="center">64.65</td>
       <td align="center">76.65</td>
@@ -177,7 +177,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
       <td align="center">61.84</td>
     </tr>
     <tr>
-      <td align="center">ToothFairy2023</td>
+      <td align="center"><a href="https://toothfairy.grand-challenge.org/toothfairy/">ToothFairy2023</a></td>
       <td align="center">65.86</td>
       <td align="center">57.45</td>
       <td align="center">75.29</td>
