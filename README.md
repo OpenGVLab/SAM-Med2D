@@ -189,7 +189,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
       <td align="center">47.32</td>
     </tr>
     <tr>
-      <td align="center">Weighted average</td>
+      <td align="center">Weighted sum</td>
       <td align="center">85.35</td>
       <td align="center">81.93</td>
       <td align="center">90.12</td>
