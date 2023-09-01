@@ -87,7 +87,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
 
 
 <table>
-    <caption align="center">Generalization validation on 9 datasets of MICCAI2023 Challenge: </caption>
+    <caption align="center">Generalization validation on 9 MICCAI2023 datasets, where "*" denotes SAM-Med2D without adapter layer parameters: </caption>
   <thead>
     <tr>
       <th rowspan="2">Datasets</th>
