@@ -64,6 +64,8 @@ class TwoWayTransformer(nn.Module):
         image_embedding: Tensor,
         image_pe: Tensor,
         point_embedding: Tensor,
+        attn_sim: Tensor,
+        target_embedding=None
     ) -> Tuple[Tensor, Tensor]:
         """
         Args:
@@ -94,6 +96,7 @@ class TwoWayTransformer(nn.Module):
                 keys=keys,
                 query_pe=point_embedding,
                 key_pe=image_pe,
+                attn_sim=attn_sim,
             )
 
         # Apply the final attention layer from the points to the image
@@ -215,7 +218,7 @@ class Attention(nn.Module):
         x = x.transpose(1, 2)
         return x.reshape(b, n_tokens, n_heads * c_per_head)  # B x N_tokens x C
 
-    def forward(self, q: Tensor, k: Tensor, v: Tensor) -> Tensor:
+    def forward(self, q: Tensor, k: Tensor, v: Tensor， attn_sim: Tensor = None) -> Tensor:
         # Input projections
         q = self.q_proj(q.to(self.q_proj.weight.dtype)) #todo
         k = self.k_proj(k.to(self.k_proj.weight.dtype)) #todo
@@ -236,6 +239,10 @@ class Attention(nn.Module):
         attn = attn / math.sqrt(c_per_head)
         attn = torch.softmax(attn, dim=-1)
 
+        if attn_sim is not None:
+            attn = attn + attn_sim
+            attn = torch.softmax(attn, dim=-1)
+            
         # Get output
         out = attn @ v
         out = self._recombine_heads(out)
