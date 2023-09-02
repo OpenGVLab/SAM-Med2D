@@ -91,6 +91,8 @@ class TwoWayTransformer(nn.Module):
 
         # Apply transformer blocks and final layernorm
         for layer in self.layers:
+            if target_embedding is not None:
+                queries += target_embedding
             queries, keys = layer(
                 queries=queries,
                 keys=keys,
@@ -102,6 +104,9 @@ class TwoWayTransformer(nn.Module):
         # Apply the final attention layer from the points to the image
         q = queries + point_embedding
         k = keys + image_pe
+
+        if target_embedding is not None:
+            q += target_embedding
         attn_out = self.final_attn_token_to_image(q=q, k=k, v=keys)
         queries = queries + attn_out
         queries = self.norm_final_attn(queries)
@@ -218,7 +223,7 @@ class Attention(nn.Module):
         x = x.transpose(1, 2)
         return x.reshape(b, n_tokens, n_heads * c_per_head)  # B x N_tokens x C
 
-    def forward(self, q: Tensor, k: Tensor, v: Tensor， attn_sim: Tensor = None) -> Tensor:
+    def forward(self, q: Tensor, k: Tensor, v: Tensor, attn_sim: Tensor = None) -> Tensor:
         # Input projections
         q = self.q_proj(q.to(self.q_proj.weight.dtype)) #todo
         k = self.k_proj(k.to(self.k_proj.weight.dtype)) #todo
