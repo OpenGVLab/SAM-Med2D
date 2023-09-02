@@ -53,8 +53,45 @@ class SammedPredictor:
         mask_input: Optional[np.ndarray] = None,
         multimask_output: bool = True,
         return_logits: bool = False,
+        attention_similarity = None,
+        target_embedding = None
     ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
-
+        """
+        Predict masks for the given input prompts, using the currently set image.
+        Arguments:
+          point_coords (np.ndarray or None): A Nx2 array of point prompts to the
+            model. Each point is in (X,Y) in pixels.
+          point_labels (np.ndarray or None): A length N array of labels for the
+            point prompts. 1 indicates a foreground point and 0 indicates a
+            background point.
+          box (np.ndarray or None): A length 4 array given a box prompt to the
+            model, in XYXY format.
+          mask_input (np.ndarray): A low resolution mask input to the model, typically
+            coming from a previous prediction iteration. Has form 1xHxW, where
+            for SAM, H=W=256.
+          multimask_output (bool): If true, the model will return three masks.
+            For ambiguous input prompts (such as a single click), this will often
+            produce better masks than a single prediction. If only a single
+            mask is needed, the model's predicted quality score can be used
+            to select the best mask. For non-ambiguous prompts, such as multiple
+            input prompts, multimask_output=False can give better results.
+          return_logits (bool): If true, returns un-thresholded masks logits
+            instead of a binary mask.
+          attention_similarity (`torch.FloatTensor`, *optional*):
+            Attention similarity tensor, to be provided to the mask decoder in case the model is used for
+            personalization as introduced in [PerSAM](https://arxiv.org/abs/2305.03048).
+          target_embedding (`torch.FloatTensor`, *optional*):
+            Embedding of the target concept, to be provided to the mask decoder in case the model is used for
+            personalization as introduced in [PerSAM](https://arxiv.org/abs/2305.03048).
+        Returns:
+          (np.ndarray): The output masks in CxHxW format, where C is the
+            number of masks, and (H, W) is the original image size.
+          (np.ndarray): An array of length C containing the model's
+            predictions for the quality of each mask.
+          (np.ndarray): An array of shape CxHxW, where C is the number
+            of masks and H=W=256. These low resolution logits can be passed to
+            a subsequent iteration as mask input.
+        """
         if not self.is_image_set:
             raise RuntimeError("An image must be set with .set_image(...) before mask prediction.")
 
@@ -85,6 +122,8 @@ class SammedPredictor:
             mask_input_torch,
             multimask_output,
             return_logits=return_logits,
+            attn_sim=attention_similarity,
+            target_embedding=target_embedding
         )
 
         masks = masks[0].detach().cpu().numpy()
@@ -101,6 +140,8 @@ class SammedPredictor:
         mask_input: Optional[torch.Tensor] = None,
         multimask_output: bool = True,
         return_logits: bool = False,
+        attn_sim = None,
+        target_embedding = None
     ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
 
         if not self.is_image_set:
@@ -130,13 +171,15 @@ class SammedPredictor:
                     sparse_prompt_embeddings=sparse_embeddings,
                     dense_prompt_embeddings=dense_embeddings,
                     multimask_output=multimask_output,
+                    attn_sim=attn_sim,
+                    target_embedding=target_embedding
                 )
 
-                if multimask_output:
-                    max_values, max_indexs = torch.max(iou_predictions, dim=1)
-                    max_values = max_values.unsqueeze(1)
-                    iou_predictions = max_values
-                    low_res_masks = low_res_masks[:, max_indexs]
+                #if multimask_output:
+                #    max_values, max_indexs = torch.max(iou_predictions, dim=1)
+                #    max_values = max_values.unsqueeze(1)
+                #    iou_predictions = max_values
+                #    low_res_masks = low_res_masks[:, max_indexs]
 
                 # Upscale the masks to the original image resolution
                 pre_masks = self.postprocess_masks(low_res_masks, self.model.image_encoder.img_size, self.original_size)
