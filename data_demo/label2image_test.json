@@ -1,0 +1,13 @@
+{
+    "data_demo/masks/amos_0004_75_inferior_vena_cava_000.png": "data_demo/images/amos_0004_75.png",
+    "data_demo/masks/amos_0004_75_liver_000.png": "data_demo/images/amos_0004_75.png",
+    "data_demo/masks/amos_0004_75_aorta_000.png": "data_demo/images/amos_0004_75.png",
+    "data_demo/masks/s0619_32_femur_right_000.png": "data_demo/images/s0619_32.png",
+    "data_demo/masks/s0619_32_gluteus_maximus_left_000.png": "data_demo/images/s0619_32.png",
+    "data_demo/masks/s0619_32_hip_left_000.png": "data_demo/images/s0619_32.png",
+    "data_demo/masks/s0619_32_colon_000.png": "data_demo/images/s0619_32.png",
+    "data_demo/masks/s0619_32_hip_right_000.png": "data_demo/images/s0619_32.png",
+    "data_demo/masks/s0619_32_hip_right_001.png": "data_demo/images/s0619_32.png",
+    "data_demo/masks/s0619_32_hip_left_001.png": "data_demo/images/s0619_32.png",
+    "data_demo/masks/s0619_32_gluteus_maximus_right_000.png": "data_demo/images/s0619_32.png"
+}
