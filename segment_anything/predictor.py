@@ -97,6 +97,8 @@ class SamPredictor:
         mask_input: Optional[np.ndarray] = None,
         multimask_output: bool = True,
         return_logits: bool = False,
+        attention_similarity = None,
+        target_embedding = None
     ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         """
         Predict masks for the given input prompts, using the currently set image.
@@ -120,7 +122,12 @@ class SamPredictor:
             input prompts, multimask_output=False can give better results.
           return_logits (bool): If true, returns un-thresholded masks logits
             instead of a binary mask.
-
+          attention_similarity (`torch.FloatTensor`, *optional*):
+            Attention similarity tensor, to be provided to the mask decoder in case the model is used for
+            personalization as introduced in [PerSAM](https://arxiv.org/abs/2305.03048).
+          target_embedding (`torch.FloatTensor`, *optional*):
+            Embedding of the target concept, to be provided to the mask decoder in case the model is used for
+            personalization as introduced in [PerSAM](https://arxiv.org/abs/2305.03048).
         Returns:
           (np.ndarray): The output masks in CxHxW format, where C is the
             number of masks, and (H, W) is the original image size.
@@ -160,6 +167,8 @@ class SamPredictor:
             mask_input_torch,
             multimask_output,
             return_logits=return_logits,
+            attn_sim=attention_similarity,
+            target_embedding=target_embedding,
         )
 
         masks = masks[0].detach().cpu().numpy()
@@ -176,6 +185,8 @@ class SamPredictor:
         mask_input: Optional[torch.Tensor] = None,
         multimask_output: bool = True,
         return_logits: bool = False,
+        attn_sim = None,
+        target_embedding = None
     ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         """
         Predict masks for the given input prompts, using the currently set image.
@@ -234,6 +245,8 @@ class SamPredictor:
             sparse_prompt_embeddings=sparse_embeddings,
             dense_prompt_embeddings=dense_embeddings,
             multimask_output=multimask_output,
+            attn_sim=attn_sim,
+            target_embedding=target_embedding
         )
 
         # Upscale the masks to the original image resolution
