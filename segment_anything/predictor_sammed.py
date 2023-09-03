@@ -54,7 +54,8 @@ class SammedPredictor:
         multimask_output: bool = True,
         return_logits: bool = False,
         attention_similarity = None,
-        target_embedding = None
+        target_embedding = None,
+        return_high_res_masks = False
     ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         """
         Predict masks for the given input prompts, using the currently set image.
@@ -83,6 +84,7 @@ class SammedPredictor:
           target_embedding (`torch.FloatTensor`, *optional*):
             Embedding of the target concept, to be provided to the mask decoder in case the model is used for
             personalization as introduced in [PerSAM](https://arxiv.org/abs/2305.03048).
+          return_high_res_masks (bool): If true, return return_high_res_mask
         Returns:
           (np.ndarray): The output masks in CxHxW format, where C is the
             number of masks, and (H, W) is the original image size.
@@ -115,7 +117,7 @@ class SammedPredictor:
             mask_input_torch = torch.as_tensor(mask_input, dtype=torch.float, device=self.device)
             mask_input_torch = mask_input_torch[None, :, :, :]
 
-        masks, iou_predictions, low_res_masks = self.predict_torch(
+        masks, iou_predictions, low_res_masks, high_res_masks= self.predict_torch(
             coords_torch,
             labels_torch,
             box_torch,
@@ -129,7 +131,10 @@ class SammedPredictor:
         masks = masks[0].detach().cpu().numpy()
         iou_predictions = iou_predictions[0].detach().cpu().numpy()
         low_res_masks = low_res_masks[0].detach().cpu().numpy()
-        return masks, iou_predictions, low_res_masks
+        if return_high_res_masks:
+            return masks, iou_predictions, low_res_masks, high_res_masks
+        else:
+            return masks, iou_predictions, low_res_masks
 
     @torch.no_grad()
     def predict_torch(
@@ -154,10 +159,11 @@ class SammedPredictor:
 
         if boxes is not None and boxes.shape[0] > 1:
             mask_list = []
+            high_res_masks_list = []
             # Embed prompts
             for i in range(boxes.shape[0]):
                 pre_boxes = boxes[i:i+1,...]
-         
+        
                 sparse_embeddings, dense_embeddings = self.model.prompt_encoder(
                     points=points,
                     boxes=pre_boxes,
@@ -180,13 +186,11 @@ class SammedPredictor:
                 #     max_values = max_values.unsqueeze(1)
                 #     iou_predictions = max_values
                 #     low_res_masks = low_res_masks[:, max_indexs]
-
-                # Upscale the masks to the original image resolution
-                pre_masks = self.postprocess_masks(low_res_masks, self.model.image_encoder.img_size, self.original_size)
         
-                mask_list.append(pre_masks)
-            masks = torch.cat(mask_list, dim=0)
-
+                # Upscale the masks to the original image resolution
+                pre_high_res_masks = self.postprocess_masks(low_res_masks, self.model.image_encoder.img_size, self.original_size)
+                mask_list.append(pre_high_res_masks)
+            high_res_masks = torch.cat(mask_list, dim=0)
         else:
             # Embed prompts
             sparse_embeddings, dense_embeddings = self.model.prompt_encoder(
@@ -202,6 +206,8 @@ class SammedPredictor:
                 sparse_prompt_embeddings=sparse_embeddings,
                 dense_prompt_embeddings=dense_embeddings,
                 multimask_output=multimask_output,
+                attn_sim=attn_sim,
+                target_embedding=target_embedding
             )
 
             # if multimask_output:
@@ -211,13 +217,15 @@ class SammedPredictor:
             #     low_res_masks = low_res_masks[:, max_indexs]
 
             # Upscale the masks to the original image resolution
-            masks = self.postprocess_masks(low_res_masks, self.model.image_encoder.img_size, self.original_size)
-        
-        if not return_logits:
-            sigmoid_output = torch.sigmoid(masks)
+            high_res_masks = self.postprocess_masks(low_res_masks, self.model.image_encoder.img_size, self.original_size)
+
+        if return_logits:
+            masks = high_res_masks
+        else:
+            sigmoid_output = torch.sigmoid(high_res_masks)
             masks = (sigmoid_output > 0.5).float()
  
-        return masks, iou_predictions, low_res_masks
+        return masks, iou_predictions, low_res_masks, high_res_masks
 
   
     def postprocess_masks(self, low_res_masks, image_size, original_size):
