@@ -16,6 +16,7 @@
 - 🏆 Comprehensive evaluation of SAM-Med2D on large-scale datasets.
 
 ## 🔥 Updates
+- (2023.09.02) Inference code release
 - (2023.08.31) Pre-trained model release
 - (2023.08.31) Paper release
 - (2023.08.26) Online Demo release
@@ -204,6 +205,24 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
 ## 👉 Visualization
 <p align="center"><img width="800" alt="image" src="https://github.com/uni-medical/SAM-Med2D/blob/main/assets/visualization.png"></p> 
 
+## 👉 Inference
+Prepare your own dataset and refer to the samples in `SAM-Med2D/data_demo` to replace them according to your specific scenario. You need to generate the "label2image_test.json" file before running "test.py"
+
+```bash
+cd ./SAM-Med2d
+python test.py
+```
+- work_dir: Specifies the working directory for the testing process. Default value is "workdir".
+- batch_size: 1.
+- image_size: Default value is 256.
+- boxes_prompt: Use Bbox prompt to get segmentation results. 
+- point_num: Specifies the number of points. Default value is 1.
+- iter_point: Specifies the number of iterations for point prompts.
+- sam_checkpoint: Load sam or sammed checkpoint.
+- encoder_adapter: Set to True if using SAM-Med2D's pretrained weights.
+- save_pred: Whether to save the prediction results.
+- prompt_path: Is there a fixed Prompt file? If not, the value is None, and it will be automatically generated in the latest prediction.
+
 
 ## 🚀 Try SAM-Med2D
 - 🏆 **Gradio Online:** Online Demo can be found on [OpenXLab](https://openxlab.org.cn/apps/detail/litianbin/SAM-Med2D).
@@ -212,7 +231,8 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
 - **Notes:** Welcome to feedback [good case👍](https://github.com/uni-medical/SAM-Med2D/issues/2) and [bad case👎](https://github.com/uni-medical/SAM-Med2D/issues/1) in issue.
 
 ## 🗓️ Ongoing
-- [ ] Code release
+- [ ] Train code release
+- [x] Inference code release
 - [x] Pre-trained model release
 - [x] Paper release
 - [x] Online Demo release
