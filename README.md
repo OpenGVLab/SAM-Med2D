@@ -16,7 +16,7 @@
 - 🏆 Comprehensive evaluation of SAM-Med2D on large-scale datasets.
 
 ## 🔥 Updates
-- (2023.09.02) Inference code release
+- (2023.09.02) Test code release
 - (2023.08.31) Pre-trained model release
 - (2023.08.31) Paper release
 - (2023.08.26) Online Demo release
@@ -205,7 +205,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
 ## 👉 Visualization
 <p align="center"><img width="800" alt="image" src="https://github.com/uni-medical/SAM-Med2D/blob/main/assets/visualization.png"></p> 
 
-## 👉 Inference
+## 👉 Test
 Prepare your own dataset and refer to the samples in `SAM-Med2D/data_demo` to replace them according to your specific scenario. You need to generate the "label2image_test.json" file before running "test.py"
 
 ```bash
@@ -232,7 +232,7 @@ python test.py
 
 ## 🗓️ Ongoing
 - [ ] Train code release
-- [x] Inference code release
+- [x] Test code release
 - [x] Pre-trained model release
 - [x] Paper release
 - [x] Online Demo release
