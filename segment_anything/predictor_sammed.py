@@ -175,11 +175,11 @@ class SammedPredictor:
                     target_embedding=target_embedding
                 )
 
-                #if multimask_output:
-                #    max_values, max_indexs = torch.max(iou_predictions, dim=1)
-                #    max_values = max_values.unsqueeze(1)
-                #    iou_predictions = max_values
-                #    low_res_masks = low_res_masks[:, max_indexs]
+                # if multimask_output:
+                #     max_values, max_indexs = torch.max(iou_predictions, dim=1)
+                #     max_values = max_values.unsqueeze(1)
+                #     iou_predictions = max_values
+                #     low_res_masks = low_res_masks[:, max_indexs]
 
                 # Upscale the masks to the original image resolution
                 pre_masks = self.postprocess_masks(low_res_masks, self.model.image_encoder.img_size, self.original_size)
@@ -204,11 +204,11 @@ class SammedPredictor:
                 multimask_output=multimask_output,
             )
 
-            if multimask_output:
-                max_values, max_indexs = torch.max(iou_predictions, dim=1)
-                max_values = max_values.unsqueeze(1)
-                iou_predictions = max_values
-                low_res_masks = low_res_masks[:, max_indexs]
+            # if multimask_output:
+            #     max_values, max_indexs = torch.max(iou_predictions, dim=1)
+            #     max_values = max_values.unsqueeze(1)
+            #     iou_predictions = max_values
+            #     low_res_masks = low_res_masks[:, max_indexs]
 
             # Upscale the masks to the original image resolution
             masks = self.postprocess_masks(low_res_masks, self.model.image_encoder.img_size, self.original_size)
