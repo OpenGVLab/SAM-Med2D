@@ -217,6 +217,7 @@ if __name__ == "__main__":
         gelu_approximate=args.gelu_approximate,
         use_stability_score=args.use_stability_score,
         return_extra_metrics=args.return_extra_metrics,
+        resize_logest_img_size=args.resize_logest_img_size,
     )
 
     if args.quantize_out is not None:

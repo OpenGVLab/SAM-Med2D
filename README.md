@@ -227,6 +227,12 @@ python test.py
 
 ### Export to ONNX
 
+- encoder
+
+```bash
+python3 scripts/export_onnx_encoder_model.py --sam_checkpoint /path/to/sam-med2d_b.pth --output /path/to/sam-med2d_b.encoder.onnx --model-type vit_b --image_size 256 --encoder_adapter True
+```
+
 - decoder
 
 ```bash
