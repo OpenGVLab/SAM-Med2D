@@ -227,16 +227,23 @@ python test.py
 
 ### Export to ONNX
 
-- encoder
+- export encoder model
 
 ```bash
 python3 scripts/export_onnx_encoder_model.py --sam_checkpoint /path/to/sam-med2d_b.pth --output /path/to/sam-med2d_b.encoder.onnx --model-type vit_b --image_size 256 --encoder_adapter True
 ```
 
-- decoder
+- export decoder model
 
 ```bash
 python3 scripts/export_onnx_model.py --checkpoint /path/to/sam-med2d_b.pth --output /path/to/sam-med2d_b.decoder.onnx --model-type vit_b --return-single-mask
+```
+
+- inference with onnxruntime
+
+```
+# cd examples/SAM-Med2D-onnxruntime
+python3 main.py --encoder_model /path/to/sam-med2d_b.encoder.onnx --decoder_model /path/to/sam-med2d_b.decoder.onnx
 ```
 
 ## 🚀 Try SAM-Med2D

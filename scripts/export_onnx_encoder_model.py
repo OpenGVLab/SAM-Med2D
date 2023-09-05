@@ -14,7 +14,6 @@ import albumentations as A
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
-from albumentations.pytorch import ToTensorV2
 from tempfile import mkdtemp
 from segment_anything import sam_model_registry
 from segment_anything.modeling import Sam
