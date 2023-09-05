@@ -4,6 +4,9 @@
 # This source code is licensed under the license found in the
 # LICENSE file in the root directory of this source tree.
 
+import sys
+sys.path.append(".")
+
 import torch
 
 from segment_anything import sam_model_registry
@@ -20,11 +23,13 @@ except ImportError:
     onnxruntime_exists = False
 
 parser = argparse.ArgumentParser(
-    description="Export the SAM prompt encoder and mask decoder to an ONNX model."
+    description="Export the SAM-Med2D prompt encoder and mask decoder to an ONNX model."
 )
 
 parser.add_argument(
-    "--checkpoint", type=str, required=True, help="The path to the SAM model checkpoint."
+    "--sam_checkpoint", type=str, required=True, help="The path to the SAM-Med2D model checkpoint."
+    "Usage: python3 scripts/export_onnx_model.py --checkpoint xxx/sam-med2d_b.pth \
+        --output xxx/sam-med2d_b.decoder.onnx --model-type vit_b --opset 12 --return-single-mask"
 )
 
 parser.add_argument(
@@ -32,10 +37,31 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    '--device', 
+    type=str, 
+    default='cpu'
+)
+
+parser.add_argument(
+    "--image_size", 
+    type=int, 
+    default=256, 
+    help="image_size"
+
+)
+
+parser.add_argument(
+    "--encoder_adapter", 
+    type=bool, 
+    default=True, 
+    help="use adapter"
+)
+
+parser.add_argument(
     "--model-type",
     type=str,
     required=True,
-    help="In ['default', 'vit_h', 'vit_l', 'vit_b']. Which type of SAM model to export.",
+    help="In ['default', 'vit_h', 'vit_l', 'vit_b']. Which type of SAM-Med2D model to export.",
 )
 
 parser.add_argument(
@@ -93,25 +119,36 @@ parser.add_argument(
     ),
 )
 
+parser.add_argument(
+    "--resize-logest-img-size",
+    action="store_true",
+    help=(
+        "If enabled, the input image will be resized to fit the longest side "
+        "and then undergo mask post-processing."
+    ),
+)
+
 
 def run_export(
+    args,
     model_type: str,
-    checkpoint: str,
     output: str,
     opset: int,
     return_single_mask: bool,
     gelu_approximate: bool = False,
     use_stability_score: bool = False,
-    return_extra_metrics=False,
+    return_extra_metrics: bool = False,
+    resize_logest_img_size: bool = False,
 ):
     print("Loading model...")
-    sam = sam_model_registry[model_type](checkpoint=checkpoint)
+    sam = sam_model_registry[model_type](args).to(args.device)
 
     onnx_model = SamOnnxModel(
         model=sam,
         return_single_mask=return_single_mask,
         use_stability_score=use_stability_score,
         return_extra_metrics=return_extra_metrics,
+        resize_logest_img_size=resize_logest_img_size,
     )
 
     if gelu_approximate:
@@ -172,8 +209,8 @@ def to_numpy(tensor):
 if __name__ == "__main__":
     args = parser.parse_args()
     run_export(
+        args,
         model_type=args.model_type,
-        checkpoint=args.checkpoint,
         output=args.output,
         opset=args.opset,
         return_single_mask=args.return_single_mask,

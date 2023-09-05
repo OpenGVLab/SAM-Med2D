@@ -223,6 +223,15 @@ python test.py
 - save_pred: Whether to save the prediction results.
 - prompt_path: Is there a fixed Prompt file? If not, the value is None, and it will be automatically generated in the latest prediction.
 
+## 👉 Deploy
+
+### Export to ONNX
+
+- decoder
+
+```bash
+python3 scripts/export_onnx_model.py --checkpoint /path/to/sam-med2d_b.pth --output /path/to/sam-med2d_b.decoder.onnx --model-type vit_b --return-single-mask
+```
 
 ## 🚀 Try SAM-Med2D
 - 🏆 **Gradio Online:** Online Demo can be found on [OpenXLab](https://openxlab.org.cn/apps/detail/litianbin/SAM-Med2D).
