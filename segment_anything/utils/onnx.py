@@ -141,7 +141,7 @@ class SamOnnxModel(nn.Module):
         if self.return_single_mask:
             masks, scores = self.select_masks(masks, scores, point_coords.shape[1])
 
-        if self.resize_longest_image_size:
+        if self.resize_logest_img_size:
             upscaled_masks = self.mask_postprocessing(masks, orig_im_size)
         else:
             upscaled_masks = self.mask_postprocessing_without_rescale(masks, orig_im_size)
