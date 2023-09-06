@@ -1,4 +1,5 @@
 import argparse
+import os
 import cv2
 import numpy as np
 import onnxruntime as ort
@@ -28,11 +29,24 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    "--img_path",
+    type=str,
+    default="../../data_demo/images/amos_0507_31.png",
+    help="Path to the image",
+)
+
+parser.add_argument(
     "--input_size", 
     type=int, 
     default=256, 
     help="input_size"
+)
 
+parser.add_argument(
+    "--work_dir", 
+    type=str, 
+    default="workdir", 
+    help="work dir"
 )
 
 args = parser.parse_args()
@@ -294,6 +308,12 @@ class SamDecoder:
         return boxes.reshape(-1, 4)
 
 def main():
+    # Create save folder
+    save_path = os.path.join(args.work_dir, 'ort_demo_results')
+    if not os.path.exists(save_path):
+        os.makedirs(save_path)
+    base_name, file_extension = os.path.splitext(os.path.basename(args.img_path))
+
     # Initialize the SAM-Med2D onnx model
     encoder = SamEncoder(
         model_path=args.encoder_model,
@@ -304,9 +324,7 @@ def main():
     )
 
     '''Specifying a specific object with a point'''
-    # You can replace `img_path` with args.image what you want, just in show demo here.
-    img_path = "../../data_demo/images/amos_0507_31.png" 
-    img_file = cv2.imread(img_path)
+    img_file = cv2.imread(args.img_path)
     img_embeddings = encoder(img_file)
     
     origin_image_size = img_file.shape[:2]
@@ -324,6 +342,7 @@ def main():
     show_mask(masks, plt.gca())
     show_points(point_coords, point_labels, plt.gca())
     plt.axis('off')
+    plt.savefig(os.path.join(save_path, base_name+'_point1'+file_extension))
     plt.show()  
 
     '''Optimizing Segmentation Results by Point Interaction'''
@@ -346,14 +365,11 @@ def main():
     show_mask(masks, plt.gca())
     show_points(point_coords, point_labels, plt.gca())
     plt.axis('off')
+    plt.savefig(os.path.join(save_path, base_name+'_point2'+file_extension))
     plt.show()
 
     '''Specifying a specific object with a bounding box'''
-    img_path = "../../data_demo/images/s0114_111.png"
-    img_file = cv2.imread(img_path)
-    origin_image_size = img_file.shape[:2]
-    img_embeddings = encoder(img_file)
-    boxes = np.array([89,43,113,64])
+    boxes = np.array([135,100,180,150])
 
     masks, _, _ = decoder.run(
         img_embeddings=img_embeddings,
@@ -365,6 +381,7 @@ def main():
     show_mask(masks, plt.gca())
     show_box(boxes, plt.gca())
     plt.axis('off')
+    plt.savefig(os.path.join(save_path, base_name+'_box'+file_extension))
     plt.show()  
  
 
