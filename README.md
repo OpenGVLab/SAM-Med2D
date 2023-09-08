@@ -241,7 +241,7 @@ python test.py
 This project is released under the [Apache 2.0 license](LICENSE). 
 
 ## 💬 Discussion Group
-If you have any questions about SAM-Med2D, feel free to join our WeChat group discussion:
+If you have any questions about SAM-Med2D, please add GV Assistant to the WeChat group discussion:
 
 <p align="center"><img width="300" alt="image" src="https://github.com/OpenGVLab/SAM-Med2D/blob/main/assets/SAM-Med2D_wechat_group.jpeg"></p> 
 
