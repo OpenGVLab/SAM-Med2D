@@ -16,6 +16,7 @@
 - 🏆 Comprehensive evaluation of SAM-Med2D on large-scale datasets.
 
 ## 🔥 Updates
+- (2023.09.14) Train code release
 - (2023.09.02) Test code release
 - (2023.08.31) Pre-trained model release
 - (2023.08.31) Paper release
@@ -205,14 +206,34 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
 ## 👉 Visualization
 <p align="center"><img width="800" alt="image" src="https://github.com/OpenGVLab/SAM-Med2D/blob/main/assets/visualization.png"></p> 
 
+## 👉 Train
+Prepare your own dataset and refer to the samples in `SAM-Med2D/data_demo` to replace them according to your specific scenario. You need to generate the `image2label_train.json` file before running `train.py`.
+
+If you want to use mixed-precision training, please install [Apex](https://github.com/NVIDIA/apex). If you don't want to install Apex, you can comment out the line `from apex import amp` and set `use_amp` to False.
+
+```bash
+cd ./SAM-Med2d
+python train.py
+```
+- work_dir: Specifies the working directory for the training process. Default value is `workdir`.
+- image_size: Default value is 256.
+- mask_num: Specify the number of masks corresponding to one image, with a default value of 5.
+- data_path: Dataset directory, for example: `data_demo`.
+- resume: Pretrained weight file, ignore `sam_checkpoint` if present.
+- sam_checkpoint: Load sam checkpoint.
+- iter_point: Mask decoder iterative runs.
+- multimask: Determines whether to output multiple masks. Default value is True.
+- encoder_adapter: Whether to fine-tune the Adapter layer, set to False only for fine-tuning the decoder.
+- use_amp: Set whether to use mixed-precision training.
+
 ## 👉 Test
-Prepare your own dataset and refer to the samples in `SAM-Med2D/data_demo` to replace them according to your specific scenario. You need to generate the "label2image_test.json" file before running "test.py"
+Prepare your own dataset and refer to the samples in `SAM-Med2D/data_demo` to replace them according to your specific scenario. You need to generate the `label2image_test.json` file before running `test.py`.
 
 ```bash
 cd ./SAM-Med2d
 python test.py
 ```
-- work_dir: Specifies the working directory for the testing process. Default value is "workdir".
+- work_dir: Specifies the working directory for the testing process. Default value is `workdir`.
 - batch_size: 1.
 - image_size: Default value is 256.
 - boxes_prompt: Use Bbox prompt to get segmentation results. 
@@ -253,7 +274,8 @@ python3 main.py --encoder_model /path/to/sam-med2d_b.encoder.onnx --decoder_mode
 - **Notes:** Welcome to feedback [good case👍](https://github.com/OpenGVLab/SAM-Med2D/issues/2) and [bad case👎](https://github.com/OpenGVLab/SAM-Med2D/issues/1) in issue.
 
 ## 🗓️ Ongoing
-- [ ] Train code release
+- [ ] Dataset release
+- [x] Train code release
 - [x] Test code release
 - [x] Pre-trained model release
 - [x] Paper release
