@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch
 import argparse
 import os
-from utils import select_random_points, FocalDiceloss_IoULoss, generate_point, setting_prompt_none, save_masks
+from utils import FocalDiceloss_IoULoss, generate_point, save_masks
 from torch.utils.data import DataLoader
 from DataLoader import TestingDataset
 from metrics import SegMetrics
@@ -118,6 +118,7 @@ def is_not_saved(save_path, mask_name):
     else:
         return True
 
+
 def main(args):
     print('*'*100)
     for key, value in vars(args).items():
@@ -200,6 +201,7 @@ def main(args):
         with open(os.path.join(args.work_dir,f'{args.image_size}_prompt.json'), 'w') as f:
             json.dump(prompt_dict, f, indent=2)
     print(f"Test loss: {average_loss:.4f}, metrics: {test_metrics}")
+
 
 if __name__ == '__main__':
     args = parse_args()
