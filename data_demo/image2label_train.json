@@ -1,0 +1,25 @@
+{
+    "data_demo/images/amos_0006_90.png": [
+        "data_demo/masks/amos_0006_90_liver_000.png",
+        "data_demo/masks/amos_0006_90_spleen_000.png",
+        "data_demo/masks/amos_0006_90_inferior_vena_cava_000.png",
+        "data_demo/masks/amos_0006_90_aorta_000.png"
+    ],
+    "data_demo/images/s0114_111.png": [
+        "data_demo/masks/s0114_111_lung_middle_lobe_right_000.png",
+        "data_demo/masks/s0114_111_heart_ventricle_right_000.png",
+        "data_demo/masks/s0114_111_lung_lower_lobe_left_000.png",
+        "data_demo/masks/s0114_111_rib_left_9_000.png",
+        "data_demo/masks/s0114_111_vertebrae_T9_000.png",
+        "data_demo/masks/s0114_111_heart_ventricle_left_000.png",
+        "data_demo/masks/s0114_111_lung_lower_lobe_right_000.png",
+        "data_demo/masks/s0114_111_lung_upper_lobe_left_000.png",
+        "data_demo/masks/s0114_111_aorta_000.png",
+        "data_demo/masks/s0114_111_autochthon_right_000.png",
+        "data_demo/masks/s0114_111_autochthon_left_000.png",
+        "data_demo/masks/s0114_111_heart_myocardium_000.png",
+        "data_demo/masks/s0114_111_heart_atrium_right_000.png",
+        "data_demo/masks/s0114_111_heart_atrium_left_000.png",
+        "data_demo/masks/s0114_111_rib_right_9_000.png"
+    ]
+}
