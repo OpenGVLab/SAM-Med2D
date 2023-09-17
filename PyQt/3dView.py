@@ -20,7 +20,7 @@ layout.addWidget(view)
 # Define a function to load and display the NIfTI image
 def load_nifti_and_display():
     # Replace 'your_image.nii.gz' with the path to your NIfTI file
-    nifti_file = "BraTS2021_00000_0000.nii.gz"
+    nifti_file = "Demo 3d Data/BraTS2021_00000_0000.nii.gz"
 
     # Load the NIfTI image using SimpleITK
     sitk_image = sitk.ReadImage(nifti_file)
