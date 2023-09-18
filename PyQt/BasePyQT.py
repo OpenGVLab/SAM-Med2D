@@ -49,9 +49,20 @@ class SlicerWidget(QWidget):
         options |= QFileDialog.ReadOnly
         file_path, _ = QFileDialog.getSaveFileName(self, f"Save {self.current_view.capitalize()} View as JPG", "",
                                                    "JPEG Image Files (*.jpg);;All Files (*)", options=options)
+        print(file_path)
         if file_path:
-            image = self.slices[self.current_view][:, :, self.slice_index]
-            sitk.WriteImage(sitk.Cast(image, sitk.sitkInt16), file_path)
+            if self.current_view == 'sagittal':
+                slice_data = sitk.GetArrayViewFromImage(self.slices[self.current_view])[:, :, self.slice_index]
+            if self.current_view == 'coronal':
+                slice_data = sitk.GetArrayViewFromImage(self.slices[self.current_view])[:, self.slice_index, :]
+            if self.current_view == 'axial':
+                slice_data = sitk.GetArrayViewFromImage(self.slices[self.current_view])[self.slice_index, :, :]
+            # nda = sitk.GetArrayFromImage(slice_data)
+            print(type(slice_data))
+            from PIL import Image
+            im = Image.fromarray(slice_data)
+            im.save(file_path)
+            # sitk.WriteImage(sitk.Cast(slice_data, sitk.sitkInt16), file_path)
 
 
 class MainWindow(QMainWindow):
@@ -76,6 +87,7 @@ class MainWindow(QMainWindow):
         }
 
         self.start_button = QPushButton("Start Segment")
+        self.start_button.clicked.connect(self.open_main_window)
 
         for button_text, view in self.view_buttons.items():
             button = QPushButton(button_text)
@@ -94,11 +106,10 @@ class MainWindow(QMainWindow):
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
 
+    def open_main_window(self):
+        from MainWindow import MainWindowSegment
 
-if __name__ == '__main__':
-    sitk_image = sitk.ReadImage('/SAM-Med2D/PyQt/BraTS2021_00000_0001.nii.gz')
+        self.close()
 
-    app = QApplication(sys.argv)
-    window = MainWindow(sitk_image)
-    window.show()
-    sys.exit(app.exec_())
+
+
