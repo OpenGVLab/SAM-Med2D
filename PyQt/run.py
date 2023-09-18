@@ -15,15 +15,15 @@ def control_windows():
 
 
 if __name__ == '__main__':
-    sitk_image = sitk.ReadImage('/home/mkhanmhmdi/Downloads/SAM(click base)/SAM-Med2D/PyQt/Demo 3d '
-                                'Data/BraTS2021_00000_0000.nii.gz')
-
+    data_path = '/home/mkhanmhmdi/Downloads/SAM(click base)/SAM-Med2D/PyQt/Demo 3d Data/BraTS2021_00000_0000.nii.gz'
     # while True:
     app1 = QApplication(sys.argv)
-    window = MainWindow(sitk_image)
+    window = MainWindow(data_path)
     window.show()
     exit_app1 = (app1.exec_())
+    image_path = window.get_image_path()
+
     app = QApplication(sys.argv)
-    window = MainWindowSegment()
+    window = MainWindowSegment(image_path=image_path)
     window.show()
     sys.exit(app.exec_())

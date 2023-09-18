@@ -7,17 +7,17 @@ from segment_anything import sam_model_registry
 from segment_anything.predictor_sammed import SammedPredictor
 from argparse import Namespace
 
-class QTModel:
-    def __init__(self):
+class Inference:
+    def __init__(self,image_path):
         self.args = Namespace()
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.args.image_size = 256
         self.args.encoder_adapter = True
-        self.args.sam_checkpoint = "/home/hooshman/Documents/reza_javadzade/Interactive/SAM-Med2D/Pretrain-Models/sam-med2d_b.pth"
+        self.args.sam_checkpoint = ("../Pretrain-Models/sam-med2d_b.pth")
         self.model = None
         self.predictor = None
         self.load_model()
-        self.image = cv2.imread('/home/hooshman/Documents/reza_javadzade/Interactive/SAM-Med2D/data_demo/Brats/0.png')
+        self.image = cv2.imread(image_path)
         self.set_image()
 
     def load_model(self):
@@ -56,3 +56,6 @@ class QTModel:
             multimask_output=True,
         )
         return masks, scores, logits
+
+if __name__=="__main__":
+    c = Inference()
