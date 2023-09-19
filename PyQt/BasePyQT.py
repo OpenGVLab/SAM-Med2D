@@ -1,16 +1,18 @@
-import sys
-import os
+import numpy as np
+from PIL import Image
 import nibabel as nib
 import SimpleITK as sitk
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QSlider, QPushButton, QFileDialog
 from PyQt5.QtGui import QImage, QPixmap, QPainter
 from PyQt5.QtCore import Qt
+from MainWindow import MainWindowSegment
 
 
 class SlicerWidget(QWidget):
     def __init__(self, data_path, sitk_image):
         super().__init__()
         self.data_path = data_path
+        self.nibabel_data = nib.load(self.data_path).get_fdata()
         self.sitk_image = sitk_image
         self.slices = {
             'sagittal': sitk_image[:, :, :],
@@ -20,17 +22,19 @@ class SlicerWidget(QWidget):
         self.current_view = 'sagittal'
         self.slice_index = self.slices[self.current_view].GetSize()[2] // 2
         self.image_path = None
+        self.slice_data_nibabel = None
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        print(self.current_view)
         if self.current_view == 'sagittal':
             slice_data = sitk.GetArrayViewFromImage(self.slices[self.current_view])[:, :, self.slice_index]
+            self.slice_data_nibabel = self.nibabel_data[:, :, self.slice_index]
         if self.current_view == 'coronal':
             slice_data = sitk.GetArrayViewFromImage(self.slices[self.current_view])[:, self.slice_index, :]
+            self.slice_data_nibabel = self.nibabel_data[:, self.slice_index, :]
         if self.current_view == 'axial':
             slice_data = sitk.GetArrayViewFromImage(self.slices[self.current_view])[self.slice_index, :, :]
-        # slice_data = sitk.GetArrayViewFromImage(self.slices[self.current_view])[:, :, self.slice_index]
+            self.slice_data_nibabel = self.nibabel_data[self.slice_index, :, :]
         slice_data = ((slice_data - slice_data.min()) / (slice_data.max() - slice_data.min()) * 255).astype('uint8')
         height, width = slice_data.shape
         bytes_per_line = width
@@ -52,23 +56,10 @@ class SlicerWidget(QWidget):
         options |= QFileDialog.ReadOnly
         file_path, _ = QFileDialog.getSaveFileName(self, f"Save {self.current_view.capitalize()} View as JPG", "",
                                                    "JPEG Image Files (*.jpg);;All Files (*)", options=options)
-        print(file_path)
-        data_3d = nib.load(self.data_path).get_fdata()
-        if file_path:
-            if self.current_view == 'sagittal':
-                slice_data = data_3d[:, :, self.slice_index]
-            if self.current_view == 'coronal':
-                slice_data = data_3d[:, self.slice_index, :]
-            if self.current_view == 'axial':
-                slice_data = data_3d[self.slice_index, :, :]
-            print(type(slice_data))
-            import numpy as np
-            from PIL import Image
-            rescaled = (255.0 / slice_data.max() * (slice_data - slice_data.min())).astype(np.uint8)
-            im = Image.fromarray(rescaled)
-            im.save(file_path)
-            # sitk.WriteImage(sitk.Cast(slice_data, sitk.sitkInt16), file_path)
-            self.image_path = file_path
+        rescaled = (255.0 / self.slice_data_nibabel.max() * (self.slice_data_nibabel - self.slice_data_nibabel.min())).astype(np.uint8)
+        im = Image.fromarray(rescaled)
+        im.save(file_path)
+        self.image_path = file_path
 
 
 class MainWindow(QMainWindow):
@@ -114,8 +105,6 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(central_widget)
 
     def close_window(self):
-        from MainWindow import MainWindowSegment
-
         self.close()
 
     def get_image_path(self):
