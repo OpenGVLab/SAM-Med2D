@@ -1,22 +1,18 @@
 import sys
+import argparse
 import SimpleITK as sitk
 from PyQt5.QtWidgets import QApplication
 from BasePyQT import MainWindow
 from MainWindow import MainWindowSegment
 
 
-def control_windows():
-    sitk_image = sitk.ReadImage('/home/mkhanmhmdi/Downloads/SAM(click base)/SAM-Med2D/PyQt/Demo 3d '
-                                'Data/BraTS2021_00000_0000.nii.gz')
-    app1 = QApplication(sys.argv)
-    window = MainWindow(sitk_image)
-    window.show()
-    exit_app1 = (app1.exec_())
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Segmentation Tool")
+    parser.add_argument("data_path", type=str, help="Path to the data file (e.g., .nii.gz)")
+    return parser.parse_args()
 
 
-if __name__ == '__main__':
-    data_path = '/home/mkhanmhmdi/Downloads/SAM(click base)/SAM-Med2D/PyQt/Demo 3d Data/BraTS2021_00000_0001.nii.gz'
-    # while True:
+def run(data_path):
     app1 = QApplication(sys.argv)
     window = MainWindow(data_path)
     window.show()
@@ -27,3 +23,8 @@ if __name__ == '__main__':
     window = MainWindowSegment(image_path=image_path)
     window.show()
     sys.exit(app.exec_())
+
+
+if __name__ == '__main__':
+    args = parse_arguments()
+    run(args.data_path)
