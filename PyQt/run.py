@@ -15,7 +15,7 @@ def control_windows():
 
 
 if __name__ == '__main__':
-    data_path = '/home/mkhanmhmdi/Downloads/SAM(click base)/SAM-Med2D/PyQt/Demo 3d Data/BraTS2021_00000_0000.nii.gz'
+    data_path = '/home/mkhanmhmdi/Downloads/SAM(click base)/SAM-Med2D/PyQt/Demo 3d Data/BraTS2021_00000_0001.nii.gz'
     # while True:
     app1 = QApplication(sys.argv)
     window = MainWindow(data_path)

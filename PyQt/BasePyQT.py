@@ -15,15 +15,18 @@ class SlicerWidget(QWidget):
         self.nibabel_data = nib.load(self.data_path).get_fdata()
         self.sitk_image = sitk.GetArrayViewFromImage(sitk_image)
         self.current_view = 'sagittal'
-        self.slice_index = sitk_image.GetSize()[2] // 2
+        self.slice_index = max(self.nibabel_data.shape)// 2
         self.image_path = None
         self.slice_data_nibabel = None
         self.slice_data = None
         self.max_shape_size = max(self.nibabel_data.shape)
-        self.sitk_image = self.pad_to_specific_shape(self.sitk_image,(max(self.nibabel_data.shape),max(self.nibabel_data.shape),max(self.nibabel_data.shape)))
-        self.nibabel_data = self.pad_to_specific_shape(self.nibabel_data,(max(self.nibabel_data.shape),max(self.nibabel_data.shape),max(self.nibabel_data.shape)))
+        self.sitk_image = self.pad_to_specific_shape(self.sitk_image, (
+        max(self.nibabel_data.shape), max(self.nibabel_data.shape), max(self.nibabel_data.shape)))
+        self.nibabel_data = self.pad_to_specific_shape(self.nibabel_data, (
+        max(self.nibabel_data.shape), max(self.nibabel_data.shape), max(self.nibabel_data.shape)))
         print(self.sitk_image.shape)
         print(self.nibabel_data.shape)
+
     def pad_to_specific_shape(self, input_array, target_shape, pad_value=0):
         """
         Pad a NumPy array to a specific shape.
@@ -47,8 +50,11 @@ class SlicerWidget(QWidget):
         padded_array = np.pad(input_array, pad_width, mode='constant', constant_values=pad_value)
 
         return padded_array
+
     def paintEvent(self, event):
         print(self.slice_index)
+        print(self.current_view)
+        print('---------------------------------------')
         painter = QPainter(self)
 
         if self.current_view == 'sagittal':
@@ -61,7 +67,8 @@ class SlicerWidget(QWidget):
             self.slice_data = self.sitk_image[self.slice_index, :, :]
             self.slice_data_nibabel = self.nibabel_data[self.slice_index, :, :]
 
-        slice_data = ((self.slice_data - self.slice_data.min()) / (self.slice_data.max() - self.slice_data.min()) * 255).astype('uint8')
+        slice_data = ((self.slice_data - self.slice_data.min()) / (
+                    self.slice_data.max() - self.slice_data.min()) * 255).astype('uint8')
         height, width = slice_data.shape
         bytes_per_line = width
         image = QImage(slice_data.data, width, height, bytes_per_line, QImage.Format_Grayscale8)
@@ -79,11 +86,14 @@ class SlicerWidget(QWidget):
 
     def save_current_view_as_jpg(self):
         print(self.slice_index)
+        print(self.current_view)
+        print('********************************')
         options = QFileDialog.Options()
         options |= QFileDialog.ReadOnly
         file_path, _ = QFileDialog.getSaveFileName(self, f"Save {self.current_view.capitalize()} View as JPG", "",
                                                    "JPEG Image Files (*.jpg);;All Files (*)", options=options)
-        rescaled = (255.0 / self.slice_data_nibabel.max() * (self.slice_data_nibabel - self.slice_data_nibabel.min())).astype(np.uint8)
+        rescaled = (255.0 / self.slice_data.max() * (
+                    self.slice_data - self.slice_data.min())).astype(np.uint8)
         im = Image.fromarray(rescaled)
         im.save(file_path)
         self.image_path = file_path

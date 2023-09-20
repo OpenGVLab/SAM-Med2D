@@ -68,11 +68,11 @@ class MainWindowSegment(QMainWindow):
         self.point_flag = ''
         self.gt_points = []
         self.mask_points = []
-        self.last_x_y = None
+        self.points_sequence = []
         self.iteration = 0
         self.all_images = [self.image]
         self.undo_counter = -2
-        self.base_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),'Output')
+        self.base_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Output')
 
     def mask_btn_action(self):
         """Set the point_flag to 'mask' when Mask button is clicked."""
@@ -142,9 +142,8 @@ class MainWindowSegment(QMainWindow):
         h, w = masks.shape[-2:]
         mask_image = masks.reshape(h, w, 1) * color.reshape(1, 1, -1)
         ax.imshow(mask_image)
-        fig.savefig(os.path.join(new_directory_path,'iteration_{}.png').format(self.iteration), bbox_inches='tight', pad_inches=0)
-
-
+        fig.savefig(os.path.join(new_directory_path, 'iteration_{}.png').format(self.iteration), bbox_inches='tight',
+                    pad_inches=0)
 
     def predict_btn_action(self):
         """Handle the Predict button click event."""
@@ -194,6 +193,7 @@ class MainWindowSegment(QMainWindow):
         """
         self.all_images = [self.image]
         self.undo_counter = -2
+
     def handleMouseClick(self, event):
         """Handle mouse click events on the image label."""
         if self.point_flag == 'gt':
@@ -231,7 +231,7 @@ class MainWindowSegment(QMainWindow):
 
     def undoCircleDraw(self):
         """Undo the last circle draw action."""
-        if abs(self.undo_counter+2) <= len(self.all_images):
+        if abs(self.undo_counter + 2) > len(self.all_images):
             return None
         self.image = self.all_images[self.undo_counter]
         self.label.setPixmap(self.image)
