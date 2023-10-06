@@ -285,9 +285,9 @@ python3 main.py --encoder_model /path/to/sam-med2d_b.encoder.onnx --decoder_mode
 This project is released under the [Apache 2.0 license](LICENSE). 
 
 ## 💬 Discussion Group
-If you have any questions about SAM-Med2D, please add GV Assistant to the WeChat group discussion:
+If you have any questions about SAM-Med2D, please add this WeChat ID to the WeChat group discussion:
 
-<p align="center"><img width="300" alt="image" src="https://github.com/OpenGVLab/SAM-Med2D/blob/main/assets/SAM-Med2D_wechat_group.jpg"></p> 
+<p align="center"><img width="300" alt="image" src="https://github.com/OpenGVLab/SAM-Med2D/blob/main/assets/SAM_Med2D_wechat_group.png"></p> 
 
 ## 🤝 Acknowledgement
 - We thank all medical workers and dataset owners for making public datasets available to the community.
