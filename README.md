@@ -310,13 +310,4 @@ If you have any questions about SAM-Med2D, please add this WeChat ID to the WeCh
       archivePrefix={arXiv},
       primaryClass={cs.CV}
 }
-
-@misc{wang2023sammed3d,
-      title={SAM-Med3D}, 
-      author={Haoyu Wang and Sizheng Guo and Jin Ye and Zhongying Deng and Junlong Cheng and Tianbin Li and Jianpin Chen and Yanzhou Su and Ziyan Huang and Yiqing Shen and Bin Fu and Shaoting Zhang and Junjun He and Yu Qiao},
-      year={2023},
-      eprint={2310.15161},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
-}
 ```
