@@ -16,6 +16,7 @@
 - 🏆 Comprehensive evaluation of SAM-Med2D on large-scale datasets.
 
 ## 🔥 Updates
+- (2023.10.24) We now released [SAM-Med3D](https://github.com/uni-medical/SAM-Med3D), which focus on segnmentation of 3D medical imaging
 - (2023.09.14) Train code release
 - (2023.09.02) Test code release
 - (2023.08.31) Pre-trained model release
@@ -212,7 +213,7 @@ Prepare your own dataset and refer to the samples in `SAM-Med2D/data_demo` to re
 If you want to use mixed-precision training, please install [Apex](https://github.com/NVIDIA/apex). If you don't want to install Apex, you can comment out the line `from apex import amp` and set `use_amp` to False.
 
 ```bash
-cd ./SAM-Med2d
+cd ./SAM-Med2D
 python train.py
 ```
 - work_dir: Specifies the working directory for the training process. Default value is `workdir`.
@@ -230,7 +231,7 @@ python train.py
 Prepare your own dataset and refer to the samples in `SAM-Med2D/data_demo` to replace them according to your specific scenario. You need to generate the `label2image_test.json` file before running `test.py`.
 
 ```bash
-cd ./SAM-Med2d
+cd ./SAM-Med2D
 python test.py
 ```
 - work_dir: Specifies the working directory for the testing process. Default value is `workdir`.
@@ -306,6 +307,15 @@ If you have any questions about SAM-Med2D, please add this WeChat ID to the WeCh
               Ziyan Huang and Jilong Chen and Lei Jiangand Hui Sun and Junjun He and Shaoting Zhang and Min Zhu and Yu Qiao},
       year={2023},
       eprint={2308.16184},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+
+@misc{wang2023sammed3d,
+      title={SAM-Med3D}, 
+      author={Haoyu Wang and Sizheng Guo and Jin Ye and Zhongying Deng and Junlong Cheng and Tianbin Li and Jianpin Chen and Yanzhou Su and Ziyan Huang and Yiqing Shen and Bin Fu and Shaoting Zhang and Junjun He and Yu Qiao},
+      year={2023},
+      eprint={2310.15161},
       archivePrefix={arXiv},
       primaryClass={cs.CV}
 }
