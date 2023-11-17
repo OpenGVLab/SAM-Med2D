@@ -102,103 +102,103 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
     </tr>
     <tr>
       <th>SAM</th>
-      <th>SAM-Med2D</th>
       <th>SAM-Med2D*</th>
+      <th>SAM-Med2D</th>
       <th>SAM</th>
-      <th>SAM-Med2D</th>
       <th>SAM-Med2D*</th>
+      <th>SAM-Med2D</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td align="center"><a href="https://www.synapse.org/#!Synapse:syn51236108/wiki/621615">CrossMoDA23</a></td>
-      <td align="center">78.98</td>
-      <td align="center">70.51</td>
-      <td align="center">84.62</td>
-      <td align="center">18.49</td>
-      <td align="center">46.08</td>
-      <td align="center">73.98</td>
+      <td align="center">78.12</td>
+      <td align="center">86.26</td>
+      <td align="center">88.42</td>
+      <td align="center">33.84</td>
+      <td align="center">65.85</td>
+      <td align="center">85.26</td>
     </tr>
     <tr>
       <td align="center"><a href="https://kits-challenge.org/kits23/">KiTS23</a></td>
-      <td align="center">84.80</td>
-      <td align="center">76.32</td>
-      <td align="center">87.93</td>
-      <td align="center">38.93</td>
-      <td align="center">48.81</td>
-      <td align="center">79.87</td>
+      <td align="center">81.52</td>
+      <td align="center">86.14</td>
+      <td align="center">89.89</td>
+      <td align="center">31.36</td>
+      <td align="center">56.67</td>
+      <td align="center">83.71</td>
     </tr>
     <tr>
       <td align="center"><a href="https://codalab.lisn.upsaclay.fr/competitions/12239#learn_the_details">FLARE23</a></td>
-      <td align="center">86.11</td>
-      <td align="center">83.51</td>
-      <td align="center">90.95</td>
-      <td align="center">51.05</td>
-      <td align="center">62.86</td>
-      <td align="center">85.10</td>
+      <td align="center">73.20</td>
+      <td align="center">77.18</td>
+      <td align="center">85.09</td>
+      <td align="center">19.87</td>
+      <td align="center">32.01</td>
+      <td align="center">77.17</td>
     </tr>
     <tr>
       <td align="center"><a href="https://atlas-challenge.u-bourgogne.fr/">ATLAS2023</a></td>
-      <td align="center">82.98</td>
-      <td align="center">73.70</td>
-      <td align="center">86.56</td>
-      <td align="center">46.89</td>
-      <td align="center">34.72</td>
-      <td align="center">70.42</td>
+      <td align="center">76.98</td>
+      <td align="center">79.09</td>
+      <td align="center">82.59/td>
+      <td align="center">29.07</td>
+      <td align="center">45.25</td>
+      <td align="center">64.76</td>
     </tr>
     <tr>
       <td align="center"><a href="https://multicenteraorta.grand-challenge.org/">SEG2023</a></td>
-      <td align="center">75.98</td>
-      <td align="center">68.02</td>
-      <td align="center">84.31</td>
-      <td align="center">11.75</td>
-      <td align="center">48.05</td>
-      <td align="center">69.85</td>
+      <td align="center">64.82</td>
+      <td align="center">81.85</td>
+      <td align="center">85.09</td>
+      <td align="center">21.15</td>
+      <td align="center">34.71</td>
+      <td align="center">72.08</td>
     </tr>
     <tr>
       <td align="center"><a href="https://lnq2023.grand-challenge.org/lnq2023/">LNQ2023</a></td>
-      <td align="center">72.31</td>
-      <td align="center">63.84</td>
-      <td align="center">81.33</td>
-      <td align="center">3.81</td>
-      <td align="center">44.81</td>
-      <td align="center">59.84</td>
+      <td align="center">53.02</td>
+      <td align="center">57.37</td>
+      <td align="center">58.01</td>
+      <td align="center">7.05</td>
+      <td align="center">7.21</td>
+      <td align="center">37.64</td>
     </tr>
     <tr>
       <td align="center"><a href="https://codalab.lisn.upsaclay.fr/competitions/9804">CAS2023</a></td>
-      <td align="center">52.34</td>
-      <td align="center">46.11</td>
-      <td align="center">60.38</td>
-      <td align="center">0.45</td>
-      <td align="center">28.79</td>
-      <td align="center">15.19</td>
+      <td align="center">61.53</td>
+      <td align="center">78.20</td>
+      <td align="center">81.10</td>
+      <td align="center">22.75</td>
+      <td align="center">46.85</td>
+      <td align="center">78.46</td>
     </tr>
     <tr>
       <td align="center"><a href="https://tdsc-abus2023.grand-challenge.org/Dataset/">TDSC-ABUS2023</a></td>
-      <td align="center">71.66</td>
-      <td align="center">64.65</td>
-      <td align="center">76.65</td>
-      <td align="center">12.11</td>
-      <td align="center">35.99</td>
-      <td align="center">61.84</td>
+      <td align="center">64.31</td>
+      <td align="center">69.00</td>
+      <td align="center">66.14</td>
+      <td align="center">8.24</td>
+      <td align="center">18.98</td>
+      <td align="center">43.55</td>
     </tr>
     <tr>
       <td align="center"><a href="https://toothfairy.grand-challenge.org/toothfairy/">ToothFairy2023</a></td>
-      <td align="center">65.86</td>
-      <td align="center">57.45</td>
-      <td align="center">75.29</td>
-      <td align="center">1.01</td>
-      <td align="center">32.12</td>
-      <td align="center">47.32</td>
+      <td align="center">43.40</td>
+      <td align="center">39.13</td>
+      <td align="center">41.23</td>
+      <td align="center">5.47</td>
+      <td align="center">5.27</td>
+      <td align="center">12.93</td>
     </tr>
     <tr>
       <td align="center">Weighted sum</td>
-      <td align="center">85.35</td>
-      <td align="center">81.93</td>
-      <td align="center">90.12</td>
-      <td align="center">48.08</td>
-      <td align="center">60.31</td>
-      <td align="center">83.41</td>
+      <td align="center">73.49</td>
+      <td align="center">77.67</td>
+      <td align="center">84.88</td>
+      <td align="center">20.88</td>
+      <td align="center">34.30</td>
+      <td align="center">76.63</td>
     </tr>
   </tbody>
 </table>
