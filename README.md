@@ -16,6 +16,7 @@
 - 🏆 Comprehensive evaluation of SAM-Med2D on large-scale datasets.
 
 ## 🔥 Updates
+- (2023.11.21) We have released article introducing the [SA-Med2D-20M](https://arxiv.org/abs/2311.11969) dataset 
 - (2023.10.24) We now released [SAM-Med3D](https://github.com/uni-medical/SAM-Med3D), which focus on segnmentation of 3D medical imaging
 - (2023.09.14) Train code release
 - (2023.09.02) Test code release
@@ -276,6 +277,7 @@ python3 main.py --encoder_model /path/to/sam-med2d_b.encoder.onnx --decoder_mode
 
 ## 🗓️ Ongoing
 - [ ] Dataset release
+- [x] Dataset article release
 - [x] Train code release
 - [x] Test code release
 - [x] Pre-trained model release
@@ -309,5 +311,14 @@ If you have any questions about SAM-Med2D, please add this WeChat ID to the WeCh
       eprint={2308.16184},
       archivePrefix={arXiv},
       primaryClass={cs.CV}
+}
+
+@misc{ye2023samed2d20m,
+      title={SA-Med2D-20M Dataset: Segment Anything in 2D Medical Imaging with 20 Million masks}, 
+      author={Jin Ye and Junlong Cheng and Jianpin Chen and Zhongying Deng and Tianbin Li and Haoyu Wang and Yanzhou Su and Ziyan Huang and Jilong Chen and Lei Jiang and Hui Sun and Min Zhu and Shaoting Zhang and Junjun He and Yu Qiao},
+      year={2023},
+      eprint={2311.11969},
+      archivePrefix={arXiv},
+      primaryClass={eess.IV}
 }
 ```
