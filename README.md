@@ -1,6 +1,7 @@
 # SAM-Med2D \[[Paper](https://arxiv.org/abs/2308.16184)]
 [![Open in OpenXLab](https://cdn-static.openxlab.org.cn/app-center/openxlab_app.svg)](https://openxlab.org.cn/apps/detail/GMAI/SAM-Med2D)
 </a> 
+<a src="https://img.shields.io/badge/Data-SAMed2D_20M-blue?logo=red" href="https://openxlab.org.cn/datasets/GMAI/SA-Med2D-20M"> <img src="https://img.shields.io/badge/Data-SAMed2D_20M-blue?logo=red">
 <a src="https://img.shields.io/badge/cs.CV-2308.16184-b31b1b?logo=arxiv&logoColor=red" href="https://arxiv.org/abs/2308.16184"> <img src="https://img.shields.io/badge/cs.CV-2308.16184-b31b1b?logo=arxiv&logoColor=red">
 <a src="https://img.shields.io/badge/WeChat-Group-green?logo=wechat" href="https://github.com/OpenGVLab/SAM-Med2D/blob/main/assets/SAM-Med2D_wechat_group.jpeg"> <img src="https://img.shields.io/badge/WeChat-Group-green?logo=wechat">
 </a>
@@ -16,8 +17,9 @@
 - 🏆 Comprehensive evaluation of SAM-Med2D on large-scale datasets.
 
 ## 🔥 Updates
+- (2023.11.23) We have released the [SA-Med2D-20M](https://openxlab.org.cn/datasets/GMAI/SA-Med2D-20M) dataset 
 - (2023.11.21) We have released article introducing the [SA-Med2D-20M](https://arxiv.org/abs/2311.11969) dataset 
-- (2023.10.24) We now released [SAM-Med3D](https://github.com/uni-medical/SAM-Med3D), which focus on segnmentation of 3D medical imaging
+- (2023.10.24) We now released [SAM-Med3D](https://github.com/uni-medical/SAM-Med3D), which focus on segmentation of 3D medical imaging
 - (2023.09.14) Train code release
 - (2023.09.02) Test code release
 - (2023.08.31) Pre-trained model release
@@ -276,7 +278,7 @@ python3 main.py --encoder_model /path/to/sam-med2d_b.encoder.onnx --decoder_mode
 - **Notes:** Welcome to feedback [good case👍](https://github.com/OpenGVLab/SAM-Med2D/issues/2) and [bad case👎](https://github.com/OpenGVLab/SAM-Med2D/issues/1) in issue.
 
 ## 🗓️ Ongoing
-- [ ] Dataset release
+- [x] Dataset release
 - [x] Dataset article release
 - [x] Train code release
 - [x] Test code release
