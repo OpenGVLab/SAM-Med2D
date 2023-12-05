@@ -17,6 +17,7 @@
 - 🏆 Comprehensive evaluation of SAM-Med2D on large-scale datasets.
 
 ## 🔥 Updates
+- (2023.12.05) We open the download of the dataset on the [Hugging Face](https://huggingface.co/datasets/OpenGVLab/SA-Med2D-20M) platform 
 - (2023.11.23) We have released the [SA-Med2D-20M](https://openxlab.org.cn/datasets/GMAI/SA-Med2D-20M) dataset 
 - (2023.11.21) We have released article introducing the [SA-Med2D-20M](https://arxiv.org/abs/2311.11969) dataset 
 - (2023.10.24) We now released [SAM-Med3D](https://github.com/uni-medical/SAM-Med3D), which focus on segmentation of 3D medical imaging
