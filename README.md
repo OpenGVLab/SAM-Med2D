@@ -95,6 +95,9 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
   </tbody>
 </table>
 
+百度云链接: https://pan.baidu.com/s/1HWo_s8O7r4iQI6irMYU8vQ?pwd=dk5x
+提取码: dk5x 
+
 
 <table>
     <caption align="center">Generalization validation on 9 MICCAI2023 datasets, where "*" denotes that we drop adapter layer of SAM-Med2D in test phase: </caption>
