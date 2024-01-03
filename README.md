@@ -210,6 +210,8 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
   </tbody>
 </table>
 
+##  Typos of paper
+In our original paper, we acknowledge that there were anomalies in the test data presented in Table 4. We have conducted data updates for this project and corrected the values in Table 4. We assure the readers that our research team has recognized this issue and will update Table 4 in the next version. We apologize for any inconvenience this may have caused.
 
 ## 👉 Visualization
 <p align="center"><img width="800" alt="image" src="https://github.com/OpenGVLab/SAM-Med2D/blob/main/assets/visualization.png"></p> 
