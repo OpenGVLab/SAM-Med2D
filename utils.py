@@ -98,6 +98,8 @@ def select_random_points(pr, gt, point_num = 9):
                 label = 1
             elif one_pred[x,y] == 1 and one_gt[x,y] == 0:
                 label = 0
+            else:
+                label = -1
             points.append((y, x))   #Negate the coordinates
             labels.append(label)
 
