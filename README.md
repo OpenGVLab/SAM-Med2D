@@ -148,7 +148,7 @@ The pipeline of SAM-Med2D. We freeze the image encoder and incorporate learnable
       <td align="center"><a href="https://atlas-challenge.u-bourgogne.fr/">ATLAS2023</a></td>
       <td align="center">76.98</td>
       <td align="center">79.09</td>
-      <td align="center">82.59/td>
+      <td align="center">82.59</td>
       <td align="center">29.07</td>
       <td align="center">45.25</td>
       <td align="center">64.76</td>
