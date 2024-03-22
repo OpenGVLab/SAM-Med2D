@@ -75,7 +75,7 @@ class TestingDataset(Dataset):
         image, mask = augments['image'], augments['mask'].to(torch.int64)
 
         if self.prompt_path is None:
-            boxes = get_boxes_from_mask(mask)
+            boxes = get_boxes_from_mask(mask, max_pixel = 0)
             point_coords, point_labels = init_point_sampling(mask, self.point_num)
         else:
             prompt_key = mask_path.split('/')[-1]
