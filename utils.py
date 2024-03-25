@@ -52,8 +52,14 @@ def get_boxes_from_mask(mask, box_num=1, std = 0.1, max_pixel = 5):
         noise_std = min(width, height) * std
         max_noise = min(max_pixel, int(noise_std * 5))
          # Add random noise to each coordinate
-        noise_x = np.random.randint(-max_noise, max_noise)
-        noise_y = np.random.randint(-max_noise, max_noise)
+        try:
+            noise_x = np.random.randint(-max_noise, max_noise)
+        except:
+            noise_x = 0
+        try:
+            noise_y = np.random.randint(-max_noise, max_noise)
+        except:
+            noise_y = 0
         x0, y0 = x0 + noise_x, y0 + noise_y
         x1, y1 = x1 + noise_x, y1 + noise_y
         noise_boxes.append((x0, y0, x1, y1))
