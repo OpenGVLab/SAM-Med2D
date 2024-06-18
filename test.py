@@ -33,10 +33,10 @@ def parse_args():
     parser.add_argument("--boxes_prompt", type=bool, default=True, help="use boxes prompt")
     parser.add_argument("--point_num", type=int, default=1, help="point num")
     parser.add_argument("--iter_point", type=int, default=1, help="iter num") 
-    parser.add_argument("--multimask", type=bool, default=True, help="ouput multimask")
+    parser.add_argument("--multimask", type=bool, default=True, help="output multimask")
     parser.add_argument("--encoder_adapter", type=bool, default=True, help="use adapter")
     parser.add_argument("--prompt_path", type=str, default=None, help="fix prompt path")
-    parser.add_argument("--save_pred", type=bool, default=False, help="save reslut")
+    parser.add_argument("--save_pred", type=bool, default=False, help="save result")
     args = parser.parse_args()
     if args.iter_point > 1:
         args.point_num = 1

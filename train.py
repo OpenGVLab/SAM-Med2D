@@ -35,7 +35,7 @@ def parse_args():
     parser.add_argument("--iter_point", type=int, default=8, help="point iterations")
     parser.add_argument('--lr_scheduler', type=str, default=None, help='lr scheduler')
     parser.add_argument("--point_list", type=list, default=[1, 3, 5, 9], help="point_list")
-    parser.add_argument("--multimask", type=bool, default=True, help="ouput multimask")
+    parser.add_argument("--multimask", type=bool, default=True, help="output multimask")
     parser.add_argument("--encoder_adapter", type=bool, default=True, help="use adapter")
     parser.add_argument("--use_amp", type=bool, default=False, help="use amp")
     args = parser.parse_args()
@@ -105,116 +105,116 @@ def train_one_epoch(args, model, optimizer, train_loader, epoch, criterion):
     train_loader = tqdm(train_loader)
     train_losses = []
     train_iter_metrics = [0] * len(args.metrics)
-    for batch, batched_input in enumerate(train_loader):
-            batched_input = stack_dict_batched(batched_input)
-            batched_input = to_device(batched_input, args.device)
-            
-            if random.random() > 0.5:
-                batched_input["point_coords"] = None
-                flag = "boxes"
-            else:
-                batched_input["boxes"] = None
-                flag = "point"
+    for batch_index, batched_input in enumerate(train_loader):
+        batched_input = stack_dict_batched(batched_input)
+        batched_input = to_device(batched_input, args.device)
+        
+        if random.random() > 0.5:
+            batched_input["point_coords"] = None
+            flag = "boxes"
+        else:
+            batched_input["boxes"] = None
+            flag = "point"
 
-            for n, value in model.image_encoder.named_parameters():
-                if "Adapter" in n:
-                    value.requires_grad = True
-                else:
-                    value.requires_grad = False
+        for n, value in model.image_encoder.named_parameters():
+            if "Adapter" in n:
+                value.requires_grad = True
+            else:
+                value.requires_grad = False
+
+        if args.use_amp:
+            labels = batched_input["label"].half()
+            image_embeddings = model.image_encoder(batched_input["image"].half())
+    
+            batch_num, _, _, _ = image_embeddings.shape
+            image_embeddings_repeat = []
+            for i in range(batch_num):
+                image_embed = image_embeddings[i]
+                image_embed = image_embed.repeat(args.mask_num, 1, 1, 1)
+                image_embeddings_repeat.append(image_embed)
+            image_embeddings = torch.cat(image_embeddings_repeat, dim=0)
+
+            masks, low_res_masks, iou_predictions = prompt_and_decoder(args, batched_input, model, image_embeddings, decoder_iter = False)
+            loss = criterion(masks, labels, iou_predictions)
+            with amp.scale_loss(loss, optimizer) as scaled_loss:
+                scaled_loss.backward(retain_graph=False)
+
+        else:
+            labels = batched_input["label"]
+            image_embeddings = model.image_encoder(batched_input["image"])
+
+            batch_num, _, _, _ = image_embeddings.shape
+            image_embeddings_repeat = []
+            for i in range(batch_num):
+                image_embed = image_embeddings[i]
+                image_embed = image_embed.repeat(args.mask_num, 1, 1, 1)
+                image_embeddings_repeat.append(image_embed)
+            image_embeddings = torch.cat(image_embeddings_repeat, dim=0)
+
+            masks, low_res_masks, iou_predictions = prompt_and_decoder(args, batched_input, model, image_embeddings, decoder_iter = False)
+            loss = criterion(masks, labels, iou_predictions)
+            loss.backward(retain_graph=False)
+
+        optimizer.step()
+        optimizer.zero_grad()
+
+        if int(batch_index+1) % 50 == 0:
+            print(f'Epoch: {epoch+1}, Batch: {batch_index+1}, first {flag} prompt: {SegMetrics(masks, labels, args.metrics)}')
+
+        point_num = random.choice(args.point_list)
+        batched_input = generate_point(masks, labels, low_res_masks, batched_input, point_num)
+        batched_input = to_device(batched_input, args.device)
+    
+        image_embeddings = image_embeddings.detach().clone()
+        for n, value in model.named_parameters():
+            if "image_encoder" in n:
+                value.requires_grad = False
+            else:
+                value.requires_grad = True
+
+        init_mask_num = np.random.randint(1, args.iter_point - 1)
+        for iter in range(args.iter_point):
+            if iter == init_mask_num or iter == args.iter_point - 1:
+                batched_input = setting_prompt_none(batched_input)
 
             if args.use_amp:
-                labels = batched_input["label"].half()
-                image_embeddings = model.image_encoder(batched_input["image"].half())
-      
-                batch, _, _, _ = image_embeddings.shape
-                image_embeddings_repeat = []
-                for i in range(batch):
-                    image_embed = image_embeddings[i]
-                    image_embed = image_embed.repeat(args.mask_num, 1, 1, 1)
-                    image_embeddings_repeat.append(image_embed)
-                image_embeddings = torch.cat(image_embeddings_repeat, dim=0)
-
-                masks, low_res_masks, iou_predictions = prompt_and_decoder(args, batched_input, model, image_embeddings, decoder_iter = False)
+                masks, low_res_masks, iou_predictions = prompt_and_decoder(args, batched_input, model, image_embeddings, decoder_iter=True)
                 loss = criterion(masks, labels, iou_predictions)
-                with amp.scale_loss(loss, optimizer) as scaled_loss:
-                    scaled_loss.backward(retain_graph=False)
-
+                with amp.scale_loss(loss,  optimizer) as scaled_loss:
+                    scaled_loss.backward(retain_graph=True)
             else:
-                labels = batched_input["label"]
-                image_embeddings = model.image_encoder(batched_input["image"])
-
-                batch, _, _, _ = image_embeddings.shape
-                image_embeddings_repeat = []
-                for i in range(batch):
-                    image_embed = image_embeddings[i]
-                    image_embed = image_embed.repeat(args.mask_num, 1, 1, 1)
-                    image_embeddings_repeat.append(image_embed)
-                image_embeddings = torch.cat(image_embeddings_repeat, dim=0)
-
-                masks, low_res_masks, iou_predictions = prompt_and_decoder(args, batched_input, model, image_embeddings, decoder_iter = False)
+                masks, low_res_masks, iou_predictions = prompt_and_decoder(args, batched_input, model, image_embeddings, decoder_iter=True)
                 loss = criterion(masks, labels, iou_predictions)
-                loss.backward(retain_graph=False)
-
+                loss.backward(retain_graph=True)
+                
             optimizer.step()
             optimizer.zero_grad()
-
-            if int(batch+1) % 50 == 0:
-                print(f'Epoch: {epoch+1}, Batch: {batch+1}, first {flag} prompt: {SegMetrics(masks, labels, args.metrics)}')
-
-            point_num = random.choice(args.point_list)
-            batched_input = generate_point(masks, labels, low_res_masks, batched_input, point_num)
-            batched_input = to_device(batched_input, args.device)
+            
+            if iter != args.iter_point - 1:
+                point_num = random.choice(args.point_list)
+                batched_input = generate_point(masks, labels, low_res_masks, batched_input, point_num)
+                batched_input = to_device(batched_input, args.device)
         
-            image_embeddings = image_embeddings.detach().clone()
-            for n, value in model.named_parameters():
-                if "image_encoder" in n:
-                    value.requires_grad = False
-                else:
-                    value.requires_grad = True
-
-            init_mask_num = np.random.randint(1, args.iter_point - 1)
-            for iter in range(args.iter_point):
+            if int(batch_index+1) % 50 == 0:
                 if iter == init_mask_num or iter == args.iter_point - 1:
-                    batched_input = setting_prompt_none(batched_input)
-
-                if args.use_amp:
-                    masks, low_res_masks, iou_predictions = prompt_and_decoder(args, batched_input, model, image_embeddings, decoder_iter=True)
-                    loss = criterion(masks, labels, iou_predictions)
-                    with amp.scale_loss(loss,  optimizer) as scaled_loss:
-                        scaled_loss.backward(retain_graph=True)
+                    print(f'Epoch: {epoch+1}, Batch: {batch_index+1}, mask prompt: {SegMetrics(masks, labels, args.metrics)}')
                 else:
-                    masks, low_res_masks, iou_predictions = prompt_and_decoder(args, batched_input, model, image_embeddings, decoder_iter=True)
-                    loss = criterion(masks, labels, iou_predictions)
-                    loss.backward(retain_graph=True)
-                    
-                optimizer.step()
-                optimizer.zero_grad()
-              
-                if iter != args.iter_point - 1:
-                    point_num = random.choice(args.point_list)
-                    batched_input = generate_point(masks, labels, low_res_masks, batched_input, point_num)
-                    batched_input = to_device(batched_input, args.device)
-           
-                if int(batch+1) % 50 == 0:
-                    if iter == init_mask_num or iter == args.iter_point - 1:
-                        print(f'Epoch: {epoch+1}, Batch: {batch+1}, mask prompt: {SegMetrics(masks, labels, args.metrics)}')
-                    else:
-                        print(f'Epoch: {epoch+1}, Batch: {batch+1}, point {point_num} prompt: { SegMetrics(masks, labels, args.metrics)}')
+                    print(f'Epoch: {epoch+1}, Batch: {batch_index+1}, point {point_num} prompt: { SegMetrics(masks, labels, args.metrics)}')
 
-            if int(batch+1) % 200 == 0:
-                print(f"epoch:{epoch+1}, iteration:{batch+1}, loss:{loss.item()}")
-                save_path = os.path.join(f"{args.work_dir}/models", args.run_name, f"epoch{epoch+1}_batch{batch+1}_sam.pth")
-                state = {'model': model.state_dict(), 'optimizer': optimizer}
-                torch.save(state, save_path)
+        if int(batch_index+1) % 200 == 0:
+            print(f"epoch:{epoch+1}, iteration:{batch_index+1}, loss:{loss.item()}")
+            save_path = os.path.join(f"{args.work_dir}/models", args.run_name, f"epoch{epoch+1}_batch{batch_index+1}_sam.pth")
+            state = {'model': model.state_dict(), 'optimizer': optimizer}
+            torch.save(state, save_path)
 
-            train_losses.append(loss.item())
+        train_losses.append(loss.item())
 
-            gpu_info = {}
-            gpu_info['gpu_name'] = args.device 
-            train_loader.set_postfix(train_loss=loss.item(), gpu_info=gpu_info)
+        gpu_info = {}
+        gpu_info['gpu_name'] = args.device 
+        train_loader.set_postfix(train_loss=loss.item(), gpu_info=gpu_info)
 
-            train_batch_metrics = SegMetrics(masks, labels, args.metrics)
-            train_iter_metrics = [train_iter_metrics[i] + train_batch_metrics[i] for i in range(len(args.metrics))]
+        train_batch_metrics = SegMetrics(masks, labels, args.metrics)
+        train_iter_metrics = [train_iter_metrics[i] + train_batch_metrics[i] for i in range(len(args.metrics))]
 
     return train_losses, train_iter_metrics
 
