@@ -126,9 +126,9 @@ def train_one_epoch(args, model, optimizer, train_loader, epoch, criterion):
                 labels = batched_input["label"].half()
                 image_embeddings = model.image_encoder(batched_input["image"].half())
       
-                batch, _, _, _ = image_embeddings.shape
+                B, _, _, _ = image_embeddings.shape
                 image_embeddings_repeat = []
-                for i in range(batch):
+                for i in range(B):
                     image_embed = image_embeddings[i]
                     image_embed = image_embed.repeat(args.mask_num, 1, 1, 1)
                     image_embeddings_repeat.append(image_embed)
@@ -143,9 +143,9 @@ def train_one_epoch(args, model, optimizer, train_loader, epoch, criterion):
                 labels = batched_input["label"]
                 image_embeddings = model.image_encoder(batched_input["image"])
 
-                batch, _, _, _ = image_embeddings.shape
+                B, _, _, _ = image_embeddings.shape
                 image_embeddings_repeat = []
-                for i in range(batch):
+                for i in range(B):
                     image_embed = image_embeddings[i]
                     image_embed = image_embed.repeat(args.mask_num, 1, 1, 1)
                     image_embeddings_repeat.append(image_embed)
